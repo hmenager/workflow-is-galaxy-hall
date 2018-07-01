@@ -52,7 +52,7 @@ export GALAXY_TEST_DB_TEMPLATE=db_gx_rev_0141.sqlite
 # run all the tests
 ./run_tests.sh -api test/api/test_cwl_conformance_v1_0.py
 # run a single conformance test
-./run_tests.sh -api test/api/test_cwl_conformance_v1_0.py:CwlConformanceTestCase.test_conformance_v1_0_6
+./run_tests.sh -api test/api/test_cwl_conformance_v1_0.py:CwlConformanceTestCase.test_conformance_v1_0_cl_basic_generation
 ```
 
 
