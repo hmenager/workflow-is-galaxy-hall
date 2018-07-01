@@ -29,6 +29,14 @@ Updating the _origin_ repository should be straightforward.
 git pull origin
 ```
 
+John performs rebases on common-workflow-language/galaxy on a regular basis. When such rebases are performed, the way to update origin is to perform a rebase locally and then send force push it locally
+
+```shell
+git rebase -i upstream/cwl-1.0
+# opens a text editor containing a list of commits, replace "pick" with "drop" on every commit that is already included in upstream
+git push --force
+```
+
 # Where are the tests?
 
 The list of CWL conformance tests in Galaxy is located in `test/unit/tools/cwl_tools/v1.0`. This directory contains the list itself, in the `conformance_tests.yaml` file, and the various CWL tools, workflows, and data in there. These files are copied from the [CWL repo](https://github.com/common-workflow-language/common-workflow-language), where they are located in `v1.0/conformance_test_v1.0.yaml` for the list itself and `v1.0/v1.0/` for the dependencies.
