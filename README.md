@@ -75,3 +75,23 @@ The part that should appear in there is:
 ```yaml
   enable_beta_tool_formats: true
 ```
+
+## add the CWL tools to the tools configuration
+
+modify the list of tools in `config/tool_conf.xml` to add the CWL tools you want to load, e.g.:
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<toolbox monitor="true">
+  <section id="test_cwl" name="CWL test tools">
+    <tool file="../test/unit/tools/cwl_tools/galactic_flavored/galactic_cat.cwl" />
+  </section>
+  <section id="getext" name="Get Data">
+    <tool file="data_source/upload.xml" />
+  </section>
+</toolbox>
+```
+
+## start!
+
+. run.sh
