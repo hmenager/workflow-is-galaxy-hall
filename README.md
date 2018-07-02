@@ -95,3 +95,8 @@ modify the list of tools in `config/tool_conf.xml` to add the CWL tools you want
 ## start!
 
 . run.sh
+
+# Miscelaneous Client development notes
+
+the "Galaxy inception bug" came from the fact that the form was not detected as "regular", something John corrected in https://github.com/common-workflow-language/galaxy/commit/9291974b7a2c55e37e268cdf9f3b199b87d5a0ca.
+When modifying the client code, make sure you rebuild the client with `make client` and reload the portal. To watch the client code (js/css) and rebuild as soon as there is a modification, just use `make client-watch`.
