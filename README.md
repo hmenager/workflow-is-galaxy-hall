@@ -58,7 +58,7 @@ export GALAXY_TEST_DB_TEMPLATE=db_gx_rev_0141.sqlite
 ```
 
 # Creating the tests used by nose
-The script to create the unit tests modules for CWL is `test/unit/tools/cwl_tools/conformance_to_test_cases.py` When it is run, it creates two modules, one for all the CWL conformance tests and one for the ones which are passing, `test/api/test_cwl_conformance_v1_0.py` and `test/api/test_cwl_conformance_green_v1_0.py`
+The conformance tests are "mirrored" in the Galaxy repository: the `conformance_tests.yaml` file and its dependencies is in the `test/unit/tools/cwl_tools/v1.0` directory. The script to create the unit tests modules for CWL is `test/unit/tools/cwl_tools/conformance_to_test_cases.py`. When it is run, it parses the conformance_tests file and creates two modules, one for all the CWL conformance tests and one for the ones which are passing, `test/api/test_cwl_conformance_v1_0.py` and `test/api/test_cwl_conformance_green_v1_0.py`
 The generation script can be run with:
 
 ```shell
