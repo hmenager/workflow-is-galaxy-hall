@@ -1,7 +1,5 @@
 # Galaxy+CWL: Implementation Study
 
-Date: 20181104
-
 ## Overview
 
 In order to run a CWL workflow with Galaxy-CWL, some modifications must be made in
