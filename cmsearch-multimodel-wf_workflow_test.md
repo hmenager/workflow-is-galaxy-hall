@@ -30,9 +30,7 @@ ELIXIR Workflow
 https://github.com/hmenager/workflow-is-cwl
 ```
 
-## Modifications description
-
-### Overview
+## Modifications overview
 
 Main modifications are:
 
@@ -43,7 +41,7 @@ Main modifications are:
 * Call '_init_dynamic_tools' method at Galaxy startup to populate '_tools_by_hash' variable.
 * Assume yaml CWL workflow if exception occurs during json deserialization (when user click on 'import')
 
-### Detailed description
+## Modifications description
 
 This section contains a merge of comments found in issues from this repository
 
@@ -53,9 +51,9 @@ https://github.com/hmenager/workflow-is-cwl/issues
 
 Each workflow and tools have a dedicated issue (most are closed, but can be reopen if needed).
 
-#### Galaxy-CWL
+### Galaxy-CWL
 
-##### Enable CWL workflow execution with GUI
+#### Enable CWL workflow execution with GUI
 
 '_tools_by_hash' must be initialized at galaxy startup to prevent error below
 (which occurs when running a CWL workflow):
@@ -99,7 +97,7 @@ TypeError: filter() got an unexpected keyword argument 'active'
 
 9e0d85b  
 
-##### Enable CWL workflow import with GUI
+#### Enable CWL workflow import with GUI
 
 To prevent exception below
 
@@ -129,7 +127,7 @@ used the hack below
 
 f2a4645
 
-##### Rename "Test Dataset".
+#### Rename "Test Dataset".
 
 To prevent error below when running CWL workflow 'test_simplest_wf' test
 
@@ -152,7 +150,7 @@ def upload_payload(self, history_id, content=None, **kwds):
 
 7827974
 
-##### Prevent flooding Galaxy left panel with tools description and label.
+#### Prevent flooding Galaxy left panel with tools description and label.
 
 ```
 class CommandLineToolProxy(ToolProxy):
@@ -173,10 +171,10 @@ class CommandLineToolProxy(ToolProxy):
 
 ad2f92b  
 
-##### Map tar file to 'Directory' type.
+#### Map tar file to 'Directory' type.
 
 ```
-# map tar file to 'Directory' type
+
 for k, v in input_json.iteritems():
     if isinstance(v, dict) and v['class'] == 'File' and v['nameext'] == '.tar':
         print("CWL-IS: tar files uploaded in Galaxy are interpreted as 'Directory'.")
@@ -261,7 +259,7 @@ parameter_types = dict(
 #directory=FileToolParameter
 ```
 
-##### Add missing mapping between Galaxy type and CWL type.
+#### Add missing mapping between Galaxy type and CWL type.
 
 ```
     def galactic_flavored_to_cwl_job(tool, param_dict, local_working_directory):
@@ -289,7 +287,7 @@ parameter_types = dict(
 
 64f6b95  
 
-##### Prevent unset optional file to trigger 'ValidationException' exception
+#### Prevent unset optional file to trigger 'ValidationException' exception
 
 Exception
 
@@ -342,36 +340,36 @@ Fix
 
 2e55c1c  
 
-##### Add 'beta_relaxed_fmt_check' to prevent file fmt check.
+#### Add 'beta_relaxed_fmt_check' to prevent file fmt check.
 
 2956b44  
 
-##### Prevent call to get_size() when dataset is None.
+#### Prevent call to get_size() when dataset is None.
 
 1657c6d 
 2d2ec56  
 
-#### Cwltool
+### Cwltool
 
-##### Add 'beta_relaxed_fmt_check' to prevent file fmt check.
+#### Add 'beta_relaxed_fmt_check' to prevent file fmt check.
 
 b02b33f
 82b0d0c
 
-#### ELIXIR Workflow
+### ELIXIR Workflow
 
 8fcf887  Use "gx:type: data" to select the tar file (i.e. the directory).
 db248cd  Temporary fix for search_space_size error.
 
-##### Replace relative paths with absolute paths.
+#### Replace relative paths with absolute paths.
 
 a876284  
 
-##### Modify label to extract tools name from Galaxy-CWL (#1).
+#### Modify label to extract tools name from Galaxy-CWL (#1).
 
 8096119  
 
-##### Add 'gx:interface' hints in tools CWL files
+#### Add 'gx:interface' hints in tools CWL files
 
 92ee2b9 
 2d96dbc
