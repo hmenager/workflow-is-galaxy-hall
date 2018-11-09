@@ -2,10 +2,32 @@
 
 # Documentation
 
+Hackathon Nov 2018
+
 ```
-https://github.com/hmenager/workflow-is-galaxy-hall
 https://github.com/elixir-europe/BioHackathon/blob/master/tools/CWL%20support%20in%20Galaxy/README.md
+```
+
+```
 https://docs.google.com/presentation/d/1zXpOhJDeVYs-J-1jt0rz7gox10o78cFqshiM-wy8Xh0/edit#slide=id.p1
+```
+
+Galaxy-CWL Implementation
+
+```
+https://github.com/common-workflow-language/galaxy/issues
+```
+
+Galaxy-CWL test
+
+```
+https://github.com/hmenager/workflow-is-cwl/issues
+```
+
+Index
+
+```
+https://github.com/hmenager/workflow-is-galaxy-hall/README.md
 ```
 
 # Setup
