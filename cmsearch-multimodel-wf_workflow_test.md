@@ -533,8 +533,104 @@ b02b33f
 
 ### ELIXIR Workflow
 
-8fcf887  Use "gx:type: data" to select the tar file (i.e. the directory).
-db248cd  Temporary fix for search_space_size error.
+#### Add 'gx:interface' hints in tools CWL files
+
+Example with BUSCO tools
+
+```
+hints:
+  - class: gx:interface
+    gx:inputs:
+      - gx:name: blastSingleCore
+        gx:type: boolean
+        gx:optional: True
+      - gx:name: cpu
+        gx:type: integer
+        gx:optional: True
+      - gx:name: evalue
+        gx:type: float
+        gx:optional: True
+      - gx:name: force
+        gx:type: boolean
+        gx:optional: True
+      - gx:name: help
+        gx:type: boolean
+        gx:optional: True
+      - gx:name: lineage
+        gx:type: data
+      - gx:name: long
+        gx:type: boolean
+        gx:optional: True
+      - gx:name: mode
+        gx:value: tran
+        gx:type: text
+      - gx:name: outputName
+        gx:value: TEST
+        gx:type: text
+      - gx:name: quiet
+        gx:type: boolean
+        gx:optional: True
+      - gx:name: regionLimit
+        gx:type: integer
+        gx:optional: True
+      - gx:name: restart
+        gx:type: boolean
+        gx:optional: True
+      - gx:name: sequenceFile
+        gx:format: 'txt'
+        gx:type: data
+      - gx:name: species
+        gx:type: text
+        gx:optional: True
+      - gx:name: tarzip
+        gx:type: boolean
+        gx:optional: True
+      - gx:name: tempPath
+        gx:type: data
+        gx:optional: True
+      - gx:name: version
+        gx:type: boolean
+        gx:optional: True
+```
+
+92ee2b9 
+
+2d96dbc
+
+7d0a7ad
+
+abc3d8f 
+
+d9d1610 
+
+e5cb9a7 
+
+5e11714 
+
+fc5ab08 
+
+a1dd63a 
+
+#### Map tar file to Directory CWL type.
+
+Use "gx:type: data" in hints section for Directory CWL type, so we
+have the right control in the Galaxy tools form (i.e. to select the
+tar file).
+
+```
+hints:
+  - class: gx:interface
+    gx:inputs:
+      - gx:name: tempPath
+        gx:type: data
+        gx:optional: True
+```
+
+8fcf887
+
+#### Temporary fix for search_space_size error.
+
+db248cd
 
 #### Replace relative paths with absolute paths.
 
@@ -543,18 +639,6 @@ a876284
 #### Modify label to extract tools name from Galaxy-CWL (#1).
 
 8096119  
-
-#### Add 'gx:interface' hints in tools CWL files
-
-92ee2b9 
-2d96dbc
-7d0a7ad
-abc3d8f 
-d9d1610 
-e5cb9a7 
-5e11714 
-fc5ab08 
-a1dd63a 
 
 ## Problems that remain
 
