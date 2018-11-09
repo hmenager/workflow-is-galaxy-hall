@@ -18,16 +18,22 @@ Galaxy-CWL Implementation
 https://github.com/common-workflow-language/galaxy/issues
 ```
 
-Galaxy-CWL test
+Galaxy-CWL workflow test (issues)
 
 ```
 https://github.com/hmenager/workflow-is-cwl/issues
 ```
 
-Index
+Galaxy-CWL ```cmsearch-multimodel-wf``` workflow test
 
 ```
-https://github.com/hmenager/workflow-is-galaxy-hall/README.md
+https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_workflow_test.md
+```
+
+Documentation Index
+
+```
+https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/README.md
 ```
 
 # Setup
