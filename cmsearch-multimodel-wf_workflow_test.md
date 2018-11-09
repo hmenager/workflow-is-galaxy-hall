@@ -630,6 +630,52 @@ hints:
 
 #### Temporary fix for search_space_size error.
 
+Required int parameter (i.e. non optional) cause error below
+
+```
+galaxy.jobs.runners ERROR 2018-07-24 17:10:22,683 [p:2318,w:1,m:0] [LocalRunner.work_thread-0] (187) Failure preparing job
+Traceback (most recent call last):
+  File "lib/galaxy/jobs/runners/__init__.py", line 192, in prepare_job
+    job_wrapper.prepare()
+  File "lib/galaxy/jobs/__init__.py", line 869, in prepare
+    tool_evaluator.set_compute_environment(compute_environment, get_special=get_special)
+  File "lib/galaxy/tools/evaluation.py", line 118, in set_compute_environment
+    self.tool.exec_before_job(self.app, inp_data, out_data, param_dict)
+  File "lib/galaxy/tools/__init__.py", line 2419, in exec_before_job
+    local_working_directory,
+  File "lib/galaxy/tools/cwl/parser.py", line 221, in job_proxy
+    return JobProxy(self, input_dict, output_dict, job_directory=job_directory)
+  File "lib/galaxy/tools/cwl/parser.py", line 356, in __init__
+    self._normalize_job()
+  File "lib/galaxy/tools/cwl/parser.py", line 389, in _normalize_job
+    process.fillInDefaults(self._tool_proxy._tool.tool["inputs"], self._input_dict)
+  File "/home/jra001k/snapshot/galaxy_h_clone/.venv/local/lib/python2.7/site-packages/cwltool/process.py", line 365, in fillInDefaults
+    raise WorkflowException("Missing required input parameter '%s'" % shortname(inp["id"]))
+  File "/home/jra001k/snapshot/galaxy_h_clone/.venv/local/lib/python2.7/site-packages/schema_salad/sourceline.py", line 164, in __exit__
+    raise self.makeError(six.text_type(exc_value))
+WorkflowException: ../workflow-is-cwl_h/tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl:54:5: Missing required input parameter 'search_space_size'
+```
+
+```
+  - id: search_space_size
+    type: int
+    inputBinding:
+      position: 0
+      prefix: '-Z'
+```
+
+Fix
+
+```
+  - id: search_space_size
+    label: search space size in *Mb* to <x> for E-value calculations
+    type: int?
+    inputBinding:
+      position: 0
+      prefix: '-Z'
+    label: search space size in *Mb* to <x> for E-value calculations
+```
+
 db248cd
 
 #### Replace relative paths with absolute paths.
