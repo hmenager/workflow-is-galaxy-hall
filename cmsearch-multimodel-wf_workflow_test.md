@@ -53,9 +53,6 @@ https://github.com/hmenager/workflow-is-cwl/issues
 
 Each workflow and tools have a dedicated issue (most are closed, but can be reopen if needed).
 
-New comments should be added in issues, not in this document
-(i.e. this document is a slave)
-
 #### Galaxy-CWL
 
 ##### Enable CWL workflow execution with GUI
@@ -266,9 +263,33 @@ parameter_types = dict(
 
 ##### Add missing mapping between Galaxy type and CWL type.
 
+```
+    def galactic_flavored_to_cwl_job(tool, param_dict, local_working_directory):
+    
+        def simple_value(input, param_dict_value, type_representation_name=None):
+            type_representation = type_representation_from_name(type_representation_name)
+
+            ...
+```
+
+```
+    def exec_before_job(self, app, inp_data, out_data, param_dict=None):
+
+        ...
+
+        # prevent empty string
+        input_json = {k:v for k, v in input_json.iteritems() if v != ''}
+
+        cwl_job_proxy = self._cwl_tool_proxy.job_proxy(
+            input_json,
+            output_dict,
+            local_working_directory,
+        )
+```
+
 64f6b95  
 
-###### Prevent unset optional file to trigger 'ValidationException' exception
+##### Prevent unset optional file to trigger 'ValidationException' exception
 
 Exception
 
@@ -306,13 +327,17 @@ ValidationException: [Errno 2] No such file or directory: '/home/jra001k/snapsho
 Fix
 
 ```
-	input_json = {k:v for k, v in input_json.iteritems() if not (isinstance(v, dict) and v['class'] == 'File' and v['location'] == 'None')}
+    def exec_before_job(self, app, inp_data, out_data, param_dict=None):
 
-	cwl_job_proxy = self._cwl_tool_proxy.job_proxy(
-		input_json,
-		output_dict,
-		local_working_directory,
-	)
+        ...
+
+        input_json = {k:v for k, v in input_json.iteritems() if not (isinstance(v, dict) and v['class'] == 'File' and v['location'] == 'None')}
+
+        cwl_job_proxy = self._cwl_tool_proxy.job_proxy(
+            input_json,
+            output_dict,
+            local_working_directory,
+        )
 ```
 
 2e55c1c  
