@@ -30,12 +30,6 @@ ELIXIR Workflow
 https://github.com/hmenager/workflow-is-cwl
 ```
 
-Project documentation
-
-```
-https://github.com/hmenager/workflow-is-galaxy-hall
-```
-
 ## Modifications description
 
 ### Overview
