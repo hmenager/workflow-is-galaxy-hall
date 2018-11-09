@@ -24,7 +24,7 @@ Galaxy-CWL tools and workflow issues
 https://github.com/hmenager/workflow-is-cwl/issues
 ```
 
-Galaxy-CWL ```cmsearch-multimodel-wf``` workflow test
+Galaxy-CWL *cmsearch-multimodel-wf* workflow test
 
 ```
 https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_workflow_test.md
