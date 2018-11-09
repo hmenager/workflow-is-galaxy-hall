@@ -37,7 +37,7 @@ https://github.com/hmenager/workflow-is-cwl
 Main modifications are:
 
 * Prevent EDAM filetype checking in Cwltool
-* Add 'Directory' type support in Galaxy (using tar file)
+* Add 'Directory' type support in Galaxy (using binding between tar-file and directory-type)
 * Add 'gx:interface' hints in CWL tools files
 * Replace relative-path with absolute-path in 'run' attributes of CWL workflow files (tools links).
 * Call '_init_dynamic_tools' method at Galaxy startup to populate '_tools_by_hash' variable.
@@ -178,8 +178,6 @@ ad2f92b
 
 ##### Map tar file to 'Directory' type.
 
-Hack
-
 ```
 # map tar file to 'Directory' type
 for k, v in input_json.iteritems():
@@ -208,8 +206,6 @@ for k, v in input_json.iteritems():
 ```
 
 22cc09f  
-
-TODO: decoupling tar-file<=>directory-type association
 
 Related code (not used for now)
 
@@ -272,7 +268,52 @@ parameter_types = dict(
 
 64f6b95  
 
-##### Fix 'ValidationException' which occurs when optional file is unset.
+###### Prevent unset optional file to trigger 'ValidationException' exception
+
+Exception
+
+```
+Traceback (most recent call last):
+  File "lib/galaxy/jobs/runners/__init__.py", line 192, in prepare_job
+    job_wrapper.prepare()
+  File "lib/galaxy/jobs/__init__.py", line 869, in prepare
+    tool_evaluator.set_compute_environment(compute_environment, get_special=get_special)
+  File "lib/galaxy/tools/evaluation.py", line 118, in set_compute_environment
+    self.tool.exec_before_job(self.app, inp_data, out_data, param_dict)
+  File "lib/galaxy/tools/__init__.py", line 2421, in exec_before_job
+    cwl_command_line = cwl_job_proxy.command_line
+  File "lib/galaxy/tools/cwl/parser.py", line 445, in command_line
+    if self.is_command_line_job:
+  File "lib/galaxy/tools/cwl/parser.py", line 365, in is_command_line_job
+    self._ensure_cwl_job_initialized()
+  File "lib/galaxy/tools/cwl/parser.py", line 381, in _ensure_cwl_job_initialized
+    beta_relaxed_fmt_check=beta_relaxed_fmt_check,
+  File "/home/jra001k/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/command_line_tool.py", line 375, in job
+    builder.pathmapper = self.makePathMapper(reffiles, builder.stagedir, **make_path_mapper_kwargs)
+  File "/home/jra001k/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/command_line_tool.py", line 233, in makePathMapper
+    separateDirs=kwargs.get("separateDirs", True))
+  File "/home/jra001k/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/pathmapper.py", line 229, in __init__
+    self.setup(dedup(referenced_files), basedir)
+  File "/home/jra001k/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/pathmapper.py", line 282, in setup
+    self.visit(fob, stagedir, basedir, copy=fob.get("writable"), staged=True)
+  File "/home/jra001k/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/pathmapper.py", line 271, in visit
+    self.visitlisting(obj.get("secondaryFiles", []), stagedir, basedir, copy=copy, staged=staged)
+  File "/home/jra001k/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/schema_salad/sourceline.py", line 164, in __exit__
+    raise self.makeError(six.text_type(exc_value))
+ValidationException: [Errno 2] No such file or directory: '/home/jra001k/snapshot/galaxy/database/jobs_directory/000/31/None'
+```
+
+Fix
+
+```
+	input_json = {k:v for k, v in input_json.iteritems() if not (isinstance(v, dict) and v['class'] == 'File' and v['location'] == 'None')}
+
+	cwl_job_proxy = self._cwl_tool_proxy.job_proxy(
+		input_json,
+		output_dict,
+		local_working_directory,
+	)
+```
 
 2e55c1c  
 
