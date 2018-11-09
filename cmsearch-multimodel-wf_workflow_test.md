@@ -47,7 +47,7 @@ Main modifications are:
 
 ## Modifications description
 
-This section contains a merge of comments found in issues from this repository
+This section contains a merge of issues from this repository
 
 ```
 https://github.com/hmenager/workflow-is-cwl/issues
