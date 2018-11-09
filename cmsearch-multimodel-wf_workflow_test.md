@@ -45,6 +45,17 @@ Main modifications are:
 
 ### Detailed description
 
+This section contains a merge of comments found in issues from this repository
+
+```
+https://github.com/hmenager/workflow-is-cwl/issues
+```
+
+Each workflow and tools have a dedicated issue (most are close, but can be reopen if needed).
+
+New comments should be added in issues, not in this document
+(i.e. this document is a slave)
+
 #### Galaxy-CWL
 
 ##### Enable CWL workflow execution with GUI
