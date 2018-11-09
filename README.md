@@ -38,7 +38,7 @@ https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/README.md
 
 # Setup
 
-The repository where the Galaxy-CWL work is done is [fork](https://github.com/common-workflow-language/galaxy). We (@hmenager, @khhillion, @jra001k) are working on a [sub-fork of it](https://github.com/common-workflow-language/galaxy).
+The repository where the Galaxy-CWL work is done is a [fork of the official one](https://github.com/common-workflow-language/galaxy). We (@hmenager, @khhillion, @jra001k) are working on a [sub-fork of it](https://github.com/common-workflow-language/galaxy).
 
 Here's a typical way to set up your environment for development purposes:
 
