@@ -265,6 +265,10 @@ parameter_types = dict(
 
 #### Add missing mapping between Galaxy type and CWL type.
 
+Copy simple_value() func from to_cwl_job() to galactic_flavored_to_cwl_job()
+
+TODO: merge both simple_value func as they are the same ?
+
 ```
     def galactic_flavored_to_cwl_job(tool, param_dict, local_working_directory):
     
@@ -274,19 +278,16 @@ parameter_types = dict(
             ...
 ```
 
+Prevent empty string
+
 ```
     def exec_before_job(self, app, inp_data, out_data, param_dict=None):
 
         ...
 
-        # prevent empty string
         input_json = {k:v for k, v in input_json.iteritems() if v != ''}
 
-        cwl_job_proxy = self._cwl_tool_proxy.job_proxy(
-            input_json,
-            output_dict,
-            local_working_directory,
-        )
+        ...
 ```
 
 64f6b95  
