@@ -53,7 +53,7 @@ This section contains a merge of issues from this repository
 https://github.com/hmenager/workflow-is-cwl/issues
 ```
 
-Each workflow and tools have a dedicated issue (most are closed, but can be reopen if needed).
+Each workflow and tools have a dedicated issue (most are now closed, but can be reopen if new problems are found).
 
 ### Galaxy-CWL
 
@@ -413,8 +413,47 @@ Fix in lib/galaxy/tools/cwl/parser.py
 
 #### Prevent call to get_size() when dataset is None.
 
-1657c6d 
-2d2ec56  
+Error
+
+```
+galaxy.jobs.runners ERROR 2018-07-24 09:00:41,003 [p:27394,w:1,m:0] [LocalRunner.work_thread-0] (174) Failure preparing job
+Traceback (most recent call last):
+  File "lib/galaxy/jobs/runners/__init__.py", line 192, in prepare_job    
+    job_wrapper.prepare()
+  File "lib/galaxy/jobs/__init__.py", line 869, in prepare
+    tool_evaluator.set_compute_environment(compute_environment, get_special=get_special)
+  File "lib/galaxy/tools/evaluation.py", line 118, in set_compute_environment
+    self.tool.exec_before_job(self.app, inp_data, out_data, param_dict)
+  File "lib/galaxy/tools/__init__.py", line 2407, in exec_before_job
+    input_json = self.param_dict_to_cwl_inputs(param_dict, local_working_directory)
+  File "lib/galaxy/tools/__init__.py", line 2482, in param_dict_to_cwl_inputs
+    input_json = galactic_flavored_to_cwl_job(self, param_dict, local_working_directory)
+  File "lib/galaxy/tools/cwl/representation.py", line 216, in galactic_flavored_to_cwl_job
+    inputs_at_depth[map_to] = dataset_wrapper_to_file_json(inputs_dir, param_dict[input_name])
+  File "lib/galaxy/tools/cwl/representation.py", line 163, in dataset_wrapper_to_file_json
+    raw_file_object["size"] = int(dataset_wrapper.get_size())
+
+TypeError: 
+'SafeStringWrapper(str:<class 'galaxy.tools.wrappers.ToolParameterValueWrapper'>, 
+<class 'galaxy.util.object_wrapper.SafeStringWrapper'>, <class 'numbers>, <type 'NoneType'>, 
+<type 'NotImplementedT' object is not callable
+```
+
+Fix
+
+```
+def dataset_wrapper_to_file_json(inputs_dir, dataset_wrapper):
+
+    ...
+
+    raw_file_object["location"] = path
+
+    if not isinstance(dataset_wrapper.unsanitized, NoneDataset):
+        raw_file_object["size"] = int(dataset_wrapper.get_size())
+```
+
+1657c6d
+2d2ec56 (duplicate)
 
 ### Cwltool
 
