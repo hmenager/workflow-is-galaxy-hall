@@ -680,6 +680,89 @@ db248cd
 
 #### Replace relative paths with absolute paths.
 
+Relative path in cwl workflow file cause error below during workflow import in Galaxy:
+
+```
+Traceback (most recent call last):
+  File "lib/galaxy/web/framework/decorators.py", line 281, in decorator
+	rval = func(self, trans, *args, **kwargs)
+  File "lib/galaxy/webapps/galaxy/api/workflows.py", line 320, in create
+	return self.__api_import_from_archive(trans, archive_data, "uploaded file", from_path=os.path.abspath(uploaded_file_name))
+  File "lib/galaxy/webapps/galaxy/api/workflows.py", line 582, in __api_import_from_archive
+	workflow, missing_tool_tups = self._workflow_from_dict(trans, data, source=source)
+  File "lib/galaxy/web/base/controller.py", line 1251, in _workflow_from_dict
+	exact_tools=exact_tools,
+  File "lib/galaxy/managers/workflows.py", line 226, in build_workflow_from_dict
+	wf_proxy = workflow_proxy(data["path"])
+  File "lib/galaxy/tools/cwl/parser.py", line 85, in workflow_proxy
+	workflow = to_cwl_workflow_object(workflow_path, strict_cwl_validation=strict_cwl_validation)
+  File "lib/galaxy/tools/cwl/parser.py", line 169, in to_cwl_workflow_object
+	cwl_workflow = _schema_loader(strict_cwl_validation).tool(path=workflow_path)
+  File "lib/galaxy/tools/cwl/schema.py", line 61, in tool
+	process_definition = self.process_definition(raw_process_reference)
+  File "lib/galaxy/tools/cwl/schema.py", line 44, in process_definition
+	raw_reference.uri,
+  File "/home/foobar/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/load_tool.py", line 276, in validate_document
+	workflowobj, fileuri, checklinks=do_validate)
+  File "/home/foobar/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/schema_salad/ref_resolver.py", line 918, in resolve_all
+	self.validate_links(document, u"", all_doc_ids)
+  File "/home/foobar/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/schema_salad/ref_resolver.py", line 1090, in validate_links
+	raise errors[0]
+ValidationException: database/tmp/tmpM55sBv:21:1: checking field `steps`
+database/tmp/tmpM55sBv:44:5:   checking object `database/tmp/tmpM55sBv#concatenate_matches`
+database/tmp/tmpM55sBv:51:5:     Field `run` contains undefined reference to `file:///home/foobar/snapshot/galaxy/database/utils/concatenate.cwl`
+database/tmp/tmpM55sBv:52:5:   checking object `database/tmp/tmpM55sBv#remove_overlaps`
+database/tmp/tmpM55sBv:60:5:     Field `run` contains undefined reference to `file:///home/foobar/snapshot/galaxy/database/tools/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl`
+```
+
+Fix
+
+```
+steps:
+  - id: cmsearch
+    in:
+      - id: covariance_model_database
+        source: covariance_models
+      - id: cpu
+        source: cores
+      - id: omit_alignment_section
+        default: true
+      - id: only_hmm
+        default: true
+      - id: query_sequences
+        source: query_sequences
+      - id: search_space_size
+        default: 1000
+    out:
+      - id: matches
+      - id: programOutput
+    run: /home/jra001k/snapshot/pasteur/workflow-is-cwl/tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl
+    #run: ../tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl
+    label: Search sequence(s) against a covariance model database
+    scatter:
+      - covariance_model_database
+  - id: concatenate_matches
+    in:
+      - id: files
+        source:
+          - cmsearch/matches
+    out:
+      - id: result
+    run: /home/jra001k/snapshot/pasteur/workflow-is-cwl/utils/concatenate.cwl
+    #run: ../utils/concatenate.cwl
+  - id: remove_overlaps
+    in:
+      - id: clan_information
+        source: clan_info
+      - id: cmsearch_matches
+        source: concatenate_matches/result
+    out:
+      - id: deoverlapped_matches
+    run: /home/jra001k/snapshot/pasteur/workflow-is-cwl/tools/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl
+    #run: ../tools/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl
+    label: Remove lower scoring overlaps from cmsearch --tblout files.
+```
+
 a876284  
 
 #### Modify label to extract tools name from Galaxy-CWL (#1).
@@ -701,7 +784,6 @@ a876284
 * Find alternative to assuming CWL workflow if exception occurs during json
   deserialization (when user click on 'import'). This is problematic as Galaxy
   native workflow may use yaml too in the future.
-
 
 ## DEMO server
 
