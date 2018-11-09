@@ -1,4 +1,4 @@
-# cmsearch-multimodel-wf workflow test with Galaxy-CWL
+# ```cmsearch-multimodel-wf``` workflow test with Galaxy-CWL
 
 ## Overview
 
@@ -152,11 +152,116 @@ def upload_payload(self, history_id, content=None, **kwds):
 
 ##### Prevent flooding Galaxy left panel with tools description and label.
 
+```
+class CommandLineToolProxy(ToolProxy):
+    _class = "CommandLineTool"
+
+    def description(self):
+        return ''
+        #return self._tool.tool.get('doc')
+
+    def label(self):
+        label = self._tool.tool.get('label')
+
+        if label is not None:
+            return label.partition(":")[0] # return substring before ':'
+        else:
+            return ''
+```
+
 ad2f92b  
 
 ##### Map tar file to 'Directory' type.
 
+Hack
+
+```
+# map tar file to 'Directory' type
+for k, v in input_json.iteritems():
+    if isinstance(v, dict) and v['class'] == 'File' and v['nameext'] == '.tar':
+        print("CWL-IS: tar files uploaded in Galaxy are interpreted as 'Directory'.")
+
+        tar_file_location = v['location']
+        directory_name = v['nameroot']
+
+        tmp_dir = os.path.join('/tmp', str(uuid.uuid4()))
+        directory_location = os.path.join(tmp_dir, directory_name)
+
+        os.makedirs(tmp_dir)
+
+        bkp_cwd = os.getcwd(); os.chdir(tmp_dir)
+        tar = tarfile.open(tar_file_location); tar.extractall(); tar.close()
+        os.chdir(bkp_cwd)
+
+
+        v['class'] = 'Directory'
+        v['location'] = directory_location
+        v['nameext'] = 'None'
+        v['nameroot'] = 'example'
+        v['basename'] = 'example'
+        #v['size'] = 
+```
+
 22cc09f  
+
+TODO: decoupling tar-file<=>directory-type association
+
+Related code (not used for now)
+
+```
+convert_response = self.dataset_populator.run_tool(
+    tool_id="CONVERTER_tar_to_directory",
+    inputs={"input1": {"src": "hda", "id": create_response.json()["outputs"][0]["id"]}},
+    history_id=history_id,
+)
+```
+
+```
+lib/galaxy/datatypes/converters/tar_to_directory.xml
+
+<tool id="CONVERTER_tar_to_directory" name="Convert tar to directory" version="1.0.0" profile="17.05">
+    <command>
+        mkdir '$output1.files_path';
+        cd '$output1.files_path';
+        tar -xzf '$input1'
+    </command>
+    <inputs>
+        <param format="tar" name="input1" type="data"/>
+    </inputs>
+    <outputs>
+        <data format="directory" name="output1"/>
+    </outputs>
+    <help>
+    </help>
+</tool>
+```
+
+```
+parameter_types = dict(
+    text=TextToolParameter,
+    integer=IntegerToolParameter,
+    float=FloatToolParameter,
+    boolean=BooleanToolParameter,
+    genomebuild=GenomeBuildParameter,
+    select=SelectToolParameter,
+    color=ColorToolParameter,
+    data_column=ColumnListParameter,
+    hidden=HiddenToolParameter,
+    hidden_data=HiddenDataToolParameter,
+    baseurl=BaseURLToolParameter,
+    file=FileToolParameter,
+    ftpfile=FTPFileToolParameter,
+    genomespacefile=GenomespaceFileToolParameter,
+    data=DataToolParameter,
+    data_collection=DataCollectionToolParameter,
+    library_data=LibraryDatasetToolParameter,
+    rules=RulesListToolParameter,
+    field=FieldTypeToolParameter,
+    drill_down=DrillDownSelectToolParameter
+)
+#directory=DataToolParameter
+#directory=FileToolParameter
+```
 
 ##### Add missing mapping between Galaxy type and CWL type.
 
