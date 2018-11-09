@@ -5,8 +5,12 @@
 cmsearch-multimodel-wf is a CWL Workflow part of ELIXIR project.
 
 In order to run cmsearch-multimodel-wf workflow with Galaxy-CWL, some
-modifications must be made in Galaxy-CWL, Cwltool, CWL tools files and
-CWL workflow files.
+modifications must be made in software and CWL files below
+
+* Galaxy-CWL 
+* Cwltool 
+* CWL Tools files
+* CWL Workflow files
 
 This document describes those modifications.
 
