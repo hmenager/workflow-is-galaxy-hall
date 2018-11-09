@@ -1,9 +1,12 @@
-# Galaxy+CWL Implementation Study <br/> cmsearch-multimodel-wf workflow test
+# cmsearch-multimodel-wf workflow test with Galaxy-CWL
 
 ## Overview
 
-In order to run a CWL workflow with Galaxy-CWL, some modifications must be made in
-Galaxy-CWL, Cwltool, CWL tools files and CWL workflow files.
+cmsearch-multimodel-wf is a CWL Workflow part of ELIXIR project.
+
+In order to run cmsearch-multimodel-wf workflow with Galaxy-CWL, some
+modifications must be made in Galaxy-CWL, Cwltool, CWL tools files and
+CWL workflow files.
 
 This document describes those modifications.
 
@@ -229,3 +232,7 @@ a1dd63a
 
 The DEMO server contains all the modifications described in this document and
 can successfully import and run the following workflow: https://github.com/hmenager/workflow-is-cwl/workflows/cmsearch-multimodel-wf.cwl
+
+<!-- 
+# vim: tw=70
+-->
