@@ -461,7 +461,74 @@ def dataset_wrapper_to_file_json(inputs_dir, dataset_wrapper):
 
 #### Add 'beta_relaxed_fmt_check' to prevent file fmt check.
 
+Prevent this exception to occur
+
+```
+galaxy.jobs.runners ERROR 2018-07-24 18:10:49,615 [p:5512,w:1,m:0] [LocalRunner.work_thread-0] (192) Failure preparing job
+Traceback (most recent call last):
+  File "lib/galaxy/jobs/runners/__init__.py", line 192, in prepare_job
+    job_wrapper.prepare()
+  File "lib/galaxy/jobs/__init__.py", line 869, in prepare
+    tool_evaluator.set_compute_environment(compute_environment, get_special=get_special)
+  File "lib/galaxy/tools/evaluation.py", line 118, in set_compute_environment
+    self.tool.exec_before_job(self.app, inp_data, out_data, param_dict)
+  File "lib/galaxy/tools/__init__.py", line 2421, in exec_before_job
+    cwl_command_line = cwl_job_proxy.command_line
+  File "lib/galaxy/tools/cwl/parser.py", line 443, in command_line
+    if self.is_command_line_job:
+  File "lib/galaxy/tools/cwl/parser.py", line 364, in is_command_line_job
+    self._ensure_cwl_job_initialized()
+  File "lib/galaxy/tools/cwl/parser.py", line 379, in _ensure_cwl_job_initialized
+    use_container=False,
+  File "/home/jra001k/snapshot/galaxy_h_clone/.venv/local/lib/python2.7/site-packages/cwltool/command_line_tool.py", line 342, in job 
+    builder = self._init_job(job_order, **kwargs)
+  File "/home/jra001k/snapshot/galaxy_h_clone/.venv/local/lib/python2.7/site-packages/cwltool/process.py", line 641, in _init_job
+    builder.bindings.extend(builder.bind_input(self.inputs_record_schema, builder.job, discover_secondaryFiles=kwargs.get("toplevel")))
+  File "/home/jra001k/snapshot/galaxy_h_clone/.venv/local/lib/python2.7/site-packages/cwltool/builder.py", line 182, in bind_input
+    bindings.extend(self.bind_input(f, datum[f["name"]], lead_pos=lead_pos, tail_pos=f["name"], discover_secondaryFiles=discover_secondaryFiles))
+  File "/home/jra001k/snapshot/galaxy_h_clone/.venv/local/lib/python2.7/site-packages/cwltool/builder.py", line 242, in bind_input
+    raise WorkflowException("Expected value of '%s' to have format %s but\n  %s" % (schema["name"], schema["format"], ve))
+WorkflowException: Expected value of 'inputRefDBFile' to have format http://edamontology.org/format_1929 but
+  File has no 'format' defined: {
+    "basename": "uniref90_subset.fasta",
+    "nameroot": "uniref90_subset",
+    "nameext": ".fasta",
+    "location": "/home/jra001k/snapshot/galaxy_h_clone/database/files/000/dataset_205.dat",
+    "class": "File",
+    "size": 4753
+}
+```
+
+Fix
+
+```
+def arg_parser():  # type: () -> argparse.ArgumentParser
+    parser = argparse.ArgumentParser(
+        description='Reference executor for Common Workflow Language standards.')
+    
+    ...
+
+    parser.add_argument("--beta_relaxed_fmt_check", action="store_true", help="Disable file format validation.")
+
+    ...
+```
+
+```
+def bind_input(self, schema, datum, lead_pos=None, tail_pos=None, discover_secondaryFiles=False):   
+
+    ...
+
+    if "format" in schema and not self.beta_relaxed_fmt_check:
+        try:
+            checkFormat(datum, self.do_eval(schema["format"]), self.formatgraph)
+        except validate.ValidationException as ve:
+            raise WorkflowException("Expected value of '%s' to have format %s but\n  %s" % (schema["name"], schema["format"], ve))
+
+    ...
+```
+
 b02b33f
+
 82b0d0c
 
 ### ELIXIR Workflow
