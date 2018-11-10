@@ -765,7 +765,27 @@ steps:
 
 a876284  
 
-#### Modify label to extract tools name from Galaxy-CWL (#1).
+#### Use special format in Tools 'label' CWL attribute
+
+Use special format in label attribute in order to include a short name
+which can be easily extracted from the long label.
+
+This short name will be displayed in Galaxy left panel to identify the tools.
+
+Example
+
+```
+label: Remove lower scoring overlaps from cmsearch --tblout files.                                                                                                                                                                 
+```
+
+become
+
+```
+label: >-                                                                                                                                                                                                                          
+  Cmsearch-deoverlap: Remove lower scoring overlaps from cmsearch --tblout files.                                                                                                                                                  
+```
+
+In this example, the short name is 'Cmsearch-deoverlap'.
 
 8096119  
 
