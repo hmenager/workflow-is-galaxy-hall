@@ -85,8 +85,8 @@
 
   This database contains 'demo' user
 
-      * email: demo@g-cwl-is.test
-      * public name: demo
+    * email: demo@g-cwl-is.test
+    * public name: demo
 
       cp database/demo.sqlite database/universe.sqlite 
 
