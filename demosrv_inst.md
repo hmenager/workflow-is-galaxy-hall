@@ -26,6 +26,11 @@
       cd ~/snapshot
       git clone https://github.com/hmenager/workflow-is-cwl
 
+* start/stop galaxy (to create .venv folder)
+
+	  sh run.sh --daemon
+	  sh run.sh --stop-daemon
+
 * Install cwltool
 
       cd ~/snapshot
