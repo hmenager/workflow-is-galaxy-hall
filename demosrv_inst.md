@@ -42,12 +42,12 @@
 
 * Start galaxy
 
-  ```sh run.sh --daemon```
+      sh run.sh --daemon
 
 * Test
 
-  ```http://localhost:8080```
+      http://localhost:8080
 
 * Stop galaxy
 
-  ```sh run.sh --stop-daemon```
+      sh run.sh --stop-daemon
