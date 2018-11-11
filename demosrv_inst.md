@@ -81,6 +81,15 @@
       source ../galaxy/.venv/bin/activate
       pip uninstall -y cwltool && pip install .
 
+* Copy demo database
+
+  This database contains 'demo' user
+
+      * email: demo@g-cwl-is.test
+      * public name: demo
+
+      cp database/demo.sqlite database/universe.sqlite 
+
 * Start galaxy
 
       sh run.sh --daemon
@@ -89,7 +98,7 @@
 
     * Workflow import
 
-        * Set tools path in workflow file according to your configuration
+        * Set tools path in workflow file according to your environment.
 
               cd ~/snapshot/workflow-is-cwl
               sed -i 's/foobar/vagrant/' workflows/cmsearch-multimodel-wf.cwl # replace 'vagrant' with your user
