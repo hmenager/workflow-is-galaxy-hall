@@ -21,13 +21,32 @@
       git clone https://github.com/hmenager/galaxy.git
       cp database/demo.sqlite database/universe.sqlite
 
+    * Notes
+
+        * config/job_conf.xml
+
+              <?xml version="1.0"?>
+              <job_conf>
+                  <plugins>
+                      <plugin id="local" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner" workers="4"/>
+                  </plugins>
+                  <destinations default="docker_local">
+                      <destination id="local" runner="local"/>
+                      <destination id="docker_local" runner="local">
+                           <param id="docker_enabled">true</param>
+                           <param id="docker_sudo">false</param>
+                      </destination>
+                  </destinations>
+              </job_conf>
+
 * Install test tools and workflows
 
       cd ~/snapshot
       git clone https://github.com/hmenager/workflow-is-cwl
 
-* start/stop galaxy (to create .venv folder)
+* Start / stop galaxy (to create .venv folder)
 
+      cd ~/snapshot/galaxy
 	  sh run.sh --daemon
 	  sh run.sh --stop-daemon
 
