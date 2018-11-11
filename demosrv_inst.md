@@ -17,7 +17,7 @@
 
 * Install galaxy
 
-    * ```
+      ```
       cd $HOME/snapshot
       git clone https://github.com/hmenager/galaxy.git
       cp database/demo.sqlite database/universe.sqlite
