@@ -1,4 +1,4 @@
-# CWL-IS demo procedure
+# *cmsearch-multimodel-wf* demo procedure
 
 * Workflow import
 
