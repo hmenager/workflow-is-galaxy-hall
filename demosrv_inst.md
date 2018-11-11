@@ -85,8 +85,8 @@
 
   This database contains 'demo' user
 
-    * email: demo@g-cwl-is.test
-    * public name: demo
+    * Email: demo@g-cwl-is.test
+    * Public name: demo
 
    ```cp database/demo.sqlite database/universe.sqlite```
 
@@ -107,7 +107,15 @@
 
               http://localhost:8080
 
-        * Click  
+        * Logon as demo@g-cwl-is.test
+
+        * Click on "Workflow"
+
+        * Click on "Import workflow" (vertical arrow)
+
+        * Click on "Choose file" and select the workflow (cmsearch-multimodel-wf.cwl)
+
+        * Click on "Import Workflow"
 
     * Workflow run
 
