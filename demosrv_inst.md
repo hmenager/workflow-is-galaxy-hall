@@ -26,11 +26,6 @@
       cd ~/snapshot
       git clone https://github.com/hmenager/workflow-is-cwl
 
-* Set tools path in workflows files according to your configuration
-
-      cd ~/snapshot/workflow-is-cwl
-      sed -i 's/foobar/vagrant/' workflows/cmsearch-multimodel-wf.cwl # replace 'vagrant' with your user
-
 * Install cwltool
 
       cd ~/snapshot
@@ -46,7 +41,22 @@
 
 * Test
 
-      http://localhost:8080
+    * Workflow import
+
+        * Set tools path in workflow file according to your configuration
+
+              cd ~/snapshot/workflow-is-cwl
+              sed -i 's/foobar/vagrant/' workflows/cmsearch-multimodel-wf.cwl # replace 'vagrant' with your user
+
+        * Open url below
+
+              http://localhost:8080
+
+        * Click  
+
+    * Workflow run
+
+        * TODO
 
 * Stop galaxy
 
