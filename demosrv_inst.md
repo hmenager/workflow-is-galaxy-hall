@@ -9,7 +9,7 @@
 * Install docker
 
     * Add galaxy user in docker group (in /etc/group)
-    * Log off/log on (to reset user group)
+    * Log off/log on (to reset user groups)
 
 * Install galaxy
 
@@ -22,12 +22,12 @@
     * cd ~/snapshot
     * git clone https://github.com/hmenager/workflow-is-cwl
 
-* set tools path in workflows files according to your configuration
+* Set tools path in workflows files according to your configuration
 
     * cd ~/snapshot/workflow-is-cwl
     * sed -i 's/foobar/vagrant/' workflows/cmsearch-multimodel-wf.cwl # replace 'vagrant' with your user
 
-* install cwltool
+* Install cwltool
 
     * cd ~/snapshot
     * git clone https://github.com/hmenager/cwltool
@@ -36,14 +36,14 @@
     * source ../galaxy/.venv/bin/activate
     * pip uninstall -y cwltool && pip install .
 
-* start galaxy
+* Start galaxy
 
     * sh run.sh --daemon
 
-* test
+* Test
 
-    * http://sd-104052.dedibox.fr:8083
+    * http://localhost:8080
 
-* stop galaxy
+* Stop galaxy
 
     * sh run.sh --stop-daemon
