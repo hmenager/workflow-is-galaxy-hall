@@ -3,13 +3,15 @@
 * Install a Linux box (eg Ubuntu 16)
 
 * Install deps
+
     * Required
-        * ```apt-get install git python-dev gcc make docker.io```
+        * ```apt-get install git python-dev gcc make```
     * Optional
         * ```apt-get install screen sqlite3 cdargs netcat-traditional vim nginx apache2-utils```
 
 * Install docker
 
+    * ```apt-get install docker.io```
     * Add galaxy user in docker group (in /etc/group)
     * Log off/log on (to reset user groups)
 
