@@ -88,7 +88,7 @@
     * email: demo@g-cwl-is.test
     * public name: demo
 
-      cp database/demo.sqlite database/universe.sqlite 
+   ```cp database/demo.sqlite database/universe.sqlite```
 
 * Start galaxy
 
