@@ -34,6 +34,10 @@ https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimo
 https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/demosrv_inst.md
 ```
 
+```
+https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/demo_run.md
+```
+
 Documentation Index
 
 ```
