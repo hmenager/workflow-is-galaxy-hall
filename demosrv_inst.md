@@ -1,10 +1,12 @@
 # CWL-IS demo server installation procedure
 
-* Install Ubuntu 16
+* Install a Linux box (eg Ubuntu 16)
 
 * Install deps
-
-    * ```aptitude install git python-dev gcc make screen sqlite3 cdargs netcat-traditional vim nginx apache2-utils docker.io```
+    * Required
+        * ```apt-get install git python-dev gcc make docker.io```
+    * Optional
+        * ```apt-get install screen sqlite3 cdargs netcat-traditional vim nginx apache2-utils```
 
 * Install docker
 
