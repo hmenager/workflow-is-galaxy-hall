@@ -21,23 +21,23 @@
       git clone https://github.com/hmenager/galaxy.git
       cp database/demo.sqlite database/universe.sqlite
 
-    * Notes
+  To fit the demo srv needs, files configuration have been set as shown below
 
-        * config/job_conf.xml
+    * config/job_conf.xml
 
-              <?xml version="1.0"?>
-              <job_conf>
-                  <plugins>
-                      <plugin id="local" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner" workers="4"/>
-                  </plugins>
-                  <destinations default="docker_local">
-                      <destination id="local" runner="local"/>
-                      <destination id="docker_local" runner="local">
-                           <param id="docker_enabled">true</param>
-                           <param id="docker_sudo">false</param>
-                      </destination>
-                  </destinations>
-              </job_conf>
+          <?xml version="1.0"?>
+          <job_conf>
+              <plugins>
+                  <plugin id="local" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner" workers="4"/>
+              </plugins>
+              <destinations default="docker_local">
+                  <destination id="local" runner="local"/>
+                  <destination id="docker_local" runner="local">
+                       <param id="docker_enabled">true</param>
+                       <param id="docker_sudo">false</param>
+                  </destination>
+              </destinations>
+          </job_conf>
 
 * Install test tools and workflows
 
