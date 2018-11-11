@@ -35,7 +35,7 @@ https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/demosrv_inst.md
 ```
 
 ```
-https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/demo_run.md
+https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_demo.md
 ```
 
 Documentation Index
