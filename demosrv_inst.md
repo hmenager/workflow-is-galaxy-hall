@@ -23,31 +23,37 @@
 
 * Install test tools and workflows
 
-    * cd ~/snapshot
-    * git clone https://github.com/hmenager/workflow-is-cwl
+    * ```
+      cd ~/snapshot
+      git clone https://github.com/hmenager/workflow-is-cwl
+      ```
 
 * Set tools path in workflows files according to your configuration
 
-    * cd ~/snapshot/workflow-is-cwl
-    * sed -i 's/foobar/vagrant/' workflows/cmsearch-multimodel-wf.cwl # replace 'vagrant' with your user
+    * ```
+      cd ~/snapshot/workflow-is-cwl
+      sed -i 's/foobar/vagrant/' workflows/cmsearch-multimodel-wf.cwl # replace 'vagrant' with your user
+      ```
 
 * Install cwltool
 
-    * cd ~/snapshot
-    * git clone https://github.com/hmenager/cwltool
-    * cd cwltool
-    * git checkout ebi-workflow-is # demo branch
-    * source ../galaxy/.venv/bin/activate
-    * pip uninstall -y cwltool && pip install .
+    * ```
+      cd ~/snapshot
+      git clone https://github.com/hmenager/cwltool
+      cd cwltool
+      git checkout ebi-workflow-is # demo branch
+      source ../galaxy/.venv/bin/activate
+      pip uninstall -y cwltool && pip install .
+      ```
 
 * Start galaxy
 
-    * sh run.sh --daemon
+    * ```sh run.sh --daemon```
 
 * Test
 
-    * http://localhost:8080
+    * ```http://localhost:8080```
 
 * Stop galaxy
 
-    * sh run.sh --stop-daemon
+    * ```sh run.sh --stop-daemon```
