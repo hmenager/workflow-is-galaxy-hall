@@ -17,11 +17,11 @@
 
 * Install galaxy
 
-      ```
+  foo bar foobar
+
       cd $HOME/snapshot
       git clone https://github.com/hmenager/galaxy.git
       cp database/demo.sqlite database/universe.sqlite
-      ```
 
 * Install test tools and workflows
 
