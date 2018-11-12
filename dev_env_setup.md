@@ -1,5 +1,4 @@
-
-# Setup
+# Development environment setup
 
 The repository where the Galaxy-CWL work is done is a [fork of the official one](https://github.com/common-workflow-language/galaxy). We (@hmenager, @khhillion, @jra001k) are working on a [sub-fork of it](https://github.com/common-workflow-language/galaxy).
 
