@@ -61,9 +61,17 @@ hints:
         gx:optional: True
 ```
 
-2d96dbc
+2d96dbc (*workflow-is-cwl* repo)
 
 ## Fix error caused by required int parameter (i.e. non optional int parameter)
+
+```
+  - id: search_space_size
+    type: int
+    inputBinding:
+      position: 0
+      prefix: '-Z'
+```
 
 Error
 
@@ -91,14 +99,6 @@ Traceback (most recent call last):
 WorkflowException: ../workflow-is-cwl_h/tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl:54:5: Missing required input parameter 'search_space_size'
 ```
 
-```
-  - id: search_space_size
-    type: int
-    inputBinding:
-      position: 0
-      prefix: '-Z'
-```
-
 Fix
 
 ```
@@ -111,9 +111,9 @@ Fix
     label: search space size in *Mb* to <x> for E-value calculations
 ```
 
-db248cd
+db248cd (*workflow-is-cwl* repo)
 
-## Prevent flooding Galaxy left panel with tools description and label.
+## Prevent flooding Galaxy left panel with tools label
 
 Patch
 
@@ -134,33 +134,16 @@ class CommandLineToolProxy(ToolProxy):
             return ''
 ```
 
-ad2f92b  
-
-Use special format in Tools 'label' CWL attribute
-
-Use special format in label attribute in order to include a short name
-which can be easily extracted from the long label.
-
-This short name will be displayed in Galaxy left panel to identify the tools.
-
-Example
-
-```
-label: Remove lower scoring overlaps from cmsearch --tblout files.                                                                                                                                                                 
-```
-
-become
+ad2f92b (*galaxy* repo)
 
 ```
 label: >-                                                                                                                                                                                                                          
   Cmsearch-deoverlap: Remove lower scoring overlaps from cmsearch --tblout files.                                                                                                                                                  
 ```
 
-In this example, the short name is 'Cmsearch-deoverlap'.
+8096119 (*workflow-is-cwl* repo)
 
-8096119  
-
-## Map tar file to 'Directory' type.
+## Map tar file to 'Directory' CWL type.
 
 Patch
 
@@ -191,13 +174,7 @@ for k, v in input_json.iteritems():
         #v['size'] = 
 ```
 
-22cc09f  
-
-Map tar file to Directory CWL type.
-
-Use "gx:type: data" in hints section for Directory CWL type, so we
-have the right control in the Galaxy tools form (i.e. to select the
-tar file).
+22cc09f (*galaxy* repo) 
 
 ```
 hints:
@@ -208,7 +185,7 @@ hints:
         gx:optional: True
 ```
 
-8fcf887
+8fcf887 (*workflow-is-cwl* repo)
 
 Alternative (not used for now)
 
@@ -269,10 +246,6 @@ lib/galaxy/datatypes/converters/tar_to_directory.xml
 
 ## Add missing mapping between Galaxy type and CWL type.
 
-Copy simple_value() func from to_cwl_job() to galactic_flavored_to_cwl_job()
-
-TODO: merge both simple_value func as they are the same ?
-
 ```
     def galactic_flavored_to_cwl_job(tool, param_dict, local_working_directory):
     
@@ -282,19 +255,18 @@ TODO: merge both simple_value func as they are the same ?
             ...
 ```
 
-Prevent empty string
-
 ```
     def exec_before_job(self, app, inp_data, out_data, param_dict=None):
 
         ...
 
+        # prevent error due to empty value
         input_json = {k:v for k, v in input_json.iteritems() if v != ''}
 
         ...
 ```
 
-64f6b95  
+64f6b95  (*galaxy* repo)
 
 ## Prevent unset optional file to trigger 'ValidationException' exception
 
@@ -347,11 +319,11 @@ Fix
         )
 ```
 
-2e55c1c  
+2e55c1c  (*galaxy* repo)
 
-## Set 'beta_relaxed_fmt_check' to prevent file fmt check.
+## Add 'beta_relaxed_fmt_check' to prevent file fmt check.
 
-Prevent this exception to occur
+Exception
 
 ```
 galaxy.jobs.runners ERROR 2018-07-24 18:10:49,615 [p:5512,w:1,m:0] [LocalRunner.work_thread-0] (192) Failure preparing job
@@ -414,49 +386,7 @@ Fix in lib/galaxy/tools/cwl/parser.py
             ))
 ```
 
-2956b44
-
-Add 'beta_relaxed_fmt_check' to prevent file fmt check.
-
-Prevent this exception to occur
-
-```
-galaxy.jobs.runners ERROR 2018-07-24 18:10:49,615 [p:5512,w:1,m:0] [LocalRunner.work_thread-0] (192) Failure preparing job
-Traceback (most recent call last):
-  File "lib/galaxy/jobs/runners/__init__.py", line 192, in prepare_job
-    job_wrapper.prepare()
-  File "lib/galaxy/jobs/__init__.py", line 869, in prepare
-    tool_evaluator.set_compute_environment(compute_environment, get_special=get_special)
-  File "lib/galaxy/tools/evaluation.py", line 118, in set_compute_environment
-    self.tool.exec_before_job(self.app, inp_data, out_data, param_dict)
-  File "lib/galaxy/tools/__init__.py", line 2421, in exec_before_job
-    cwl_command_line = cwl_job_proxy.command_line
-  File "lib/galaxy/tools/cwl/parser.py", line 443, in command_line
-    if self.is_command_line_job:
-  File "lib/galaxy/tools/cwl/parser.py", line 364, in is_command_line_job
-    self._ensure_cwl_job_initialized()
-  File "lib/galaxy/tools/cwl/parser.py", line 379, in _ensure_cwl_job_initialized
-    use_container=False,
-  File "/home/jra001k/snapshot/galaxy_h_clone/.venv/local/lib/python2.7/site-packages/cwltool/command_line_tool.py", line 342, in job 
-    builder = self._init_job(job_order, **kwargs)
-  File "/home/jra001k/snapshot/galaxy_h_clone/.venv/local/lib/python2.7/site-packages/cwltool/process.py", line 641, in _init_job
-    builder.bindings.extend(builder.bind_input(self.inputs_record_schema, builder.job, discover_secondaryFiles=kwargs.get("toplevel")))
-  File "/home/jra001k/snapshot/galaxy_h_clone/.venv/local/lib/python2.7/site-packages/cwltool/builder.py", line 182, in bind_input
-    bindings.extend(self.bind_input(f, datum[f["name"]], lead_pos=lead_pos, tail_pos=f["name"], discover_secondaryFiles=discover_secondaryFiles))
-  File "/home/jra001k/snapshot/galaxy_h_clone/.venv/local/lib/python2.7/site-packages/cwltool/builder.py", line 242, in bind_input
-    raise WorkflowException("Expected value of '%s' to have format %s but\n  %s" % (schema["name"], schema["format"], ve))
-WorkflowException: Expected value of 'inputRefDBFile' to have format http://edamontology.org/format_1929 but
-  File has no 'format' defined: {
-    "basename": "uniref90_subset.fasta",
-    "nameroot": "uniref90_subset",
-    "nameext": ".fasta",
-    "location": "/home/jra001k/snapshot/galaxy_h_clone/database/files/000/dataset_205.dat",
-    "class": "File",
-    "size": 4753
-}
-```
-
-Fix
+2956b44 (*galaxy* repo)
 
 ```
 def arg_parser():  # type: () -> argparse.ArgumentParser
@@ -484,14 +414,13 @@ def bind_input(self, schema, datum, lead_pos=None, tail_pos=None, discover_secon
     ...
 ```
 
-b02b33f
+b02b33f (*cwltool* repo)
 
-82b0d0c
-
+82b0d0c (*cwltool* repo)
 
 ## Prevent call to get_size() when dataset is None.
 
-Error
+Exception
 
 ```
 galaxy.jobs.runners ERROR 2018-07-24 09:00:41,003 [p:27394,w:1,m:0] [LocalRunner.work_thread-0] (174) Failure preparing job
@@ -530,13 +459,11 @@ def dataset_wrapper_to_file_json(inputs_dir, dataset_wrapper):
         raw_file_object["size"] = int(dataset_wrapper.get_size())
 ```
 
-1657c6d
-
-2d2ec56 (duplicate)
+1657c6d (*galaxy* repo)
 
 ## Rename "Test Dataset".
 
-Error
+Exception
 
 ```
   File "/home/jra001k/snapshot/pasteur/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/pathmapper.py", line 46, in visit_class
@@ -555,11 +482,11 @@ def upload_payload(self, history_id, content=None, **kwds):
     ...
 ```
 
-7827974
+7827974 (*galaxy* repo)
 
 ## Enable CWL workflow import with GUI
 
-Error
+Exception
 
 ```
 raise exceptions.MessageException("The data content does not appear to be a valid workflow.")
@@ -585,11 +512,11 @@ Fix
       ...
 ```
 
-f2a4645
+f2a4645 (*galaxy* repo)
 
 ## Replace relative paths with absolute paths.
 
-Relative path in cwl workflow file cause error below during workflow import in Galaxy:
+Exception
 
 ```
 Traceback (most recent call last):
@@ -672,11 +599,11 @@ steps:
     label: Remove lower scoring overlaps from cmsearch --tblout files.
 ```
 
-a876284  
+a876284 (*workflow-is-cwl* repo)
 
 ## Enable CWL workflow execution with GUI
 
-Errors:
+Exception
 
 ```
 Traceback (most recent call last):
@@ -715,7 +642,7 @@ TypeError: filter() got an unexpected keyword argument 'active'
 
 Fix
 
-9e0d85b  
+9e0d85b (*galaxy* repo)
 
 <!-- 
 # vim: tw=70
