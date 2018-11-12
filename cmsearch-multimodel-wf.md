@@ -30,12 +30,12 @@ ELIXIR Workflow
 
 ## Modifications overview
 
+* Add *gx:interface* hints in CWL tools files
 * Prevent filetype checking (EDAM) in Cwltool
 * Add *Directory* type support in Galaxy (using binding between tar-file and cwl-directory-type)
-* Add *gx:interface* hints in CWL tools files
+* Assume yaml CWL workflow if exception occurs during json deserialization (when user click on 'import')
 * Replace *relative path* with *absolute path* in *run* attributes of CWL workflow files
 * Call '_init_dynamic_tools' method at Galaxy startup to populate '_tools_by_hash' variable
-* Assume yaml CWL workflow if exception occurs during json deserialization (when user click on 'import')
 
 ## Modifications description
 
