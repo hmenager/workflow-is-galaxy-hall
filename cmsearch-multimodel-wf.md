@@ -47,7 +47,9 @@ https://github.com/hmenager/workflow-is-cwl
 
 FIXME
 
-## Modifications detailed description (code)
+## Modifications detailed description
+
+For code details, see this document:
 
 <https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md>
 
