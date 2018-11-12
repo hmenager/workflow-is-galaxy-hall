@@ -69,9 +69,9 @@ Code modification details are brought together in this document
   deserialization (when user click on 'import'). This is problematic as Galaxy
   native workflow may use yaml too in the future.
 
-## DEMO server
+## Demo server
 
-The DEMO server contains all the modifications described in this
+The Demo server contains all the modifications described in this
 document and can successfully import and run the following workflow:
 https://github.com/hmenager/workflow-is-cwl/workflows/cmsearch-multimodel-wf.cwl
 
