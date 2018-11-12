@@ -1,6 +1,4 @@
-# Running *cmsearch-multimodel-wf* in Galaxy-CWL - annex&nbsp;3
-
-## *cmsearch-multimodel-wf* demo procedure
+# Running *cmsearch-multimodel-wf* in Galaxy-CWL - annex&nbsp;3 - demo procedure
 
 * Workflow import
 

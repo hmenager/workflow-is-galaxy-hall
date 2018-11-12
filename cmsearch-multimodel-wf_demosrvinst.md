@@ -1,6 +1,4 @@
-# Running *cmsearch-multimodel-wf* in Galaxy-CWL - annex&nbsp;2
-
-## *cmsearch-multimodel-wf* demo server installation procedure
+# Running *cmsearch-multimodel-wf* in Galaxy-CWL - annex&nbsp;2 - demo server installation procedure
 
 * Install a Linux box (eg Ubuntu 16)
 
