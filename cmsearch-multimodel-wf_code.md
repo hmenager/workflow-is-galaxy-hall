@@ -73,7 +73,7 @@ hints:
       prefix: '-Z'
 ```
 
-Error
+### Exception
 
 ```
 galaxy.jobs.runners ERROR 2018-07-24 17:10:22,683 [p:2318,w:1,m:0] [LocalRunner.work_thread-0] (187) Failure preparing job
@@ -99,7 +99,7 @@ Traceback (most recent call last):
 WorkflowException: ../workflow-is-cwl_h/tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl:54:5: Missing required input parameter 'search_space_size'
 ```
 
-Fix
+### Fix
 
 ```
   - id: search_space_size
@@ -113,9 +113,9 @@ Fix
 
 db248cd (*workflow-is-cwl* repo)
 
-## Prevent flooding Galaxy left panel with tools label
+## Prevent flooding Galaxy left panel with large Tools label
 
-Patch
+### Patch
 
 ```
 class CommandLineToolProxy(ToolProxy):
@@ -145,7 +145,7 @@ label: >-
 
 ## Map tar file to 'Directory' CWL type.
 
-Patch
+### Patch
 
 ```
 
@@ -187,7 +187,7 @@ hints:
 
 8fcf887 (*workflow-is-cwl* repo)
 
-Alternative (not used for now)
+### Alternative (not used for now)
 
 ```
 parameter_types = dict(
@@ -270,7 +270,7 @@ lib/galaxy/datatypes/converters/tar_to_directory.xml
 
 ## Prevent unset optional file to trigger 'ValidationException' exception
 
-Exception
+### Exception
 
 ```
 Traceback (most recent call last):
@@ -303,7 +303,7 @@ Traceback (most recent call last):
 ValidationException: [Errno 2] No such file or directory: '/home/jra001k/snapshot/galaxy/database/jobs_directory/000/31/None'
 ```
 
-Fix
+### Fix
 
 ```
     def exec_before_job(self, app, inp_data, out_data, param_dict=None):
@@ -323,7 +323,7 @@ Fix
 
 ## Add 'beta_relaxed_fmt_check' to prevent file fmt check.
 
-Exception
+### Exception
 
 ```
 galaxy.jobs.runners ERROR 2018-07-24 18:10:49,615 [p:5512,w:1,m:0] [LocalRunner.work_thread-0] (192) Failure preparing job
@@ -361,13 +361,11 @@ WorkflowException: Expected value of 'inputRefDBFile' to have format http://edam
 }
 ```
 
-Fix in lib/galaxy/tools/cwl/cwltool_deps.py
+###  Fix
 
 ```
 beta_relaxed_fmt_check = False # if set to true, file format checking is not perfomed.
 ```
-
-Fix in lib/galaxy/tools/cwl/parser.py
 
 ```
     def _ensure_cwl_job_initialized(self):
@@ -414,13 +412,11 @@ def bind_input(self, schema, datum, lead_pos=None, tail_pos=None, discover_secon
     ...
 ```
 
-b02b33f (*cwltool* repo)
-
-82b0d0c (*cwltool* repo)
+b02b33f, 82b0d0c (*cwltool* repo)
 
 ## Prevent call to get_size() when dataset is None.
 
-Exception
+### Exception
 
 ```
 galaxy.jobs.runners ERROR 2018-07-24 09:00:41,003 [p:27394,w:1,m:0] [LocalRunner.work_thread-0] (174) Failure preparing job
@@ -446,7 +442,7 @@ TypeError:
 <type 'NotImplementedT' object is not callable
 ```
 
-Fix
+### Fix
 
 ```
 def dataset_wrapper_to_file_json(inputs_dir, dataset_wrapper):
@@ -463,7 +459,7 @@ def dataset_wrapper_to_file_json(inputs_dir, dataset_wrapper):
 
 ## Rename "Test Dataset".
 
-Exception
+### Exception
 
 ```
   File "/home/jra001k/snapshot/pasteur/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/pathmapper.py", line 46, in visit_class
@@ -473,7 +469,7 @@ Exception
 WorkflowException: Invalid filename: 'Test Dataset' contains illegal characters
 ```
 
-Fix
+### Fix
 
 ```
 def upload_payload(self, history_id, content=None, **kwds):
@@ -486,13 +482,13 @@ def upload_payload(self, history_id, content=None, **kwds):
 
 ## Enable CWL workflow import with GUI
 
-Exception
+### Exception
 
 ```
 raise exceptions.MessageException("The data content does not appear to be a valid workflow.")
 ```
 
-Fix
+### Fix
 
 ```
   def __api_import_from_archive(self, trans, archive_data, source=None, from_path=None):
@@ -516,7 +512,7 @@ f2a4645 (*galaxy* repo)
 
 ## Replace relative paths with absolute paths.
 
-Exception
+### Exception
 
 ```
 Traceback (most recent call last):
@@ -551,7 +547,7 @@ database/tmp/tmpM55sBv:52:5:   checking object `database/tmp/tmpM55sBv#remove_ov
 database/tmp/tmpM55sBv:60:5:     Field `run` contains undefined reference to `file:///home/foobar/snapshot/galaxy/database/tools/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl`
 ```
 
-Fix
+### Fix
 
 ```
 steps:
@@ -603,7 +599,7 @@ a876284 (*workflow-is-cwl* repo)
 
 ## Enable CWL workflow execution with GUI
 
-Exception
+### Exception
 
 ```
 Traceback (most recent call last):
@@ -640,7 +636,7 @@ KeyError: u'e4de79296ec91ab9b8d8d9d71f94044a2561c01b9fc708e5197d432b453fa297'
 TypeError: filter() got an unexpected keyword argument 'active'
 ```
 
-Fix
+### Fix
 
 ```
   class UniverseApplication(config.ConfiguresGalaxyMixin):
