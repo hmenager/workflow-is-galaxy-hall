@@ -6,7 +6,7 @@
 3. [Prevent flooding Galaxy left panel with large Tools label](#prevent-flooding-galaxy-left-panel-with-large-tools-label)
 4. [Map tar file to *Directory* CWL type](#map-tar-file-to-directory-cwl-type)
 5. [Add missing mapping between Galaxy type and CWL type](#add-missing-mapping-between-galaxy-type-and-cwl-type)
-6. [Prevent *unset optional file* to trigger *ValidationException*]()
+6. [Prevent *unset optional file* to trigger *ValidationException*](#prevent-unset-optional-file-to-trigger-validationexception)
 7. [Add *beta_relaxed_fmt_check* to prevent file fmt check](#add-beta_relaxed_fmt_check-to-prevent-file-fmt-check)
 8. [Prevent call to get_size() when dataset is None](#prevent-call-to-get_size-when-dataset-is-none)
 9. [Rename *Test Dataset*](#rename-test-dataset)
