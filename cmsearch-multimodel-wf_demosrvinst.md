@@ -98,7 +98,9 @@
 
 * Test
 
-    * ```https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_demo.md```
+  Demo procedure is detailed here:
+
+      https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_demo.md
 
 * Stop galaxy
 
