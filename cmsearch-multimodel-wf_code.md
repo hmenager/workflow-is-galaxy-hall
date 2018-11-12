@@ -2,9 +2,7 @@
 
 ## Exceptions encountered and temporary fixes
 
-### Galaxy-CWL
-
-#### Enable CWL workflow execution with GUI
+### Enable CWL workflow execution with GUI
 
 Errors:
 
@@ -47,7 +45,7 @@ Fix
 
 9e0d85b  
 
-#### Enable CWL workflow import with GUI
+### Enable CWL workflow import with GUI
 
 Error
 
@@ -77,7 +75,7 @@ Fix
 
 f2a4645
 
-#### Rename "Test Dataset".
+### Rename "Test Dataset".
 
 Error
 
@@ -100,7 +98,7 @@ def upload_payload(self, history_id, content=None, **kwds):
 
 7827974
 
-#### Prevent flooding Galaxy left panel with tools description and label.
+### Prevent flooding Galaxy left panel with tools description and label.
 
 Patch
 
@@ -123,7 +121,7 @@ class CommandLineToolProxy(ToolProxy):
 
 ad2f92b  
 
-#### Map tar file to 'Directory' type.
+### Map tar file to 'Directory' type.
 
 Patch
 
@@ -213,7 +211,7 @@ lib/galaxy/datatypes/converters/tar_to_directory.xml
 </tool>
 ```
 
-#### Add missing mapping between Galaxy type and CWL type.
+### Add missing mapping between Galaxy type and CWL type.
 
 Copy simple_value() func from to_cwl_job() to galactic_flavored_to_cwl_job()
 
@@ -242,7 +240,7 @@ Prevent empty string
 
 64f6b95  
 
-#### Prevent unset optional file to trigger 'ValidationException' exception
+### Prevent unset optional file to trigger 'ValidationException' exception
 
 Exception
 
@@ -295,7 +293,7 @@ Fix
 
 2e55c1c  
 
-#### Set 'beta_relaxed_fmt_check' to prevent file fmt check.
+### Set 'beta_relaxed_fmt_check' to prevent file fmt check.
 
 Prevent this exception to occur
 
@@ -362,7 +360,7 @@ Fix in lib/galaxy/tools/cwl/parser.py
 
 2956b44
 
-#### Prevent call to get_size() when dataset is None.
+### Prevent call to get_size() when dataset is None.
 
 Error
 
@@ -407,9 +405,7 @@ def dataset_wrapper_to_file_json(inputs_dir, dataset_wrapper):
 
 2d2ec56 (duplicate)
 
-### Cwltool
-
-#### Add 'beta_relaxed_fmt_check' to prevent file fmt check.
+### Add 'beta_relaxed_fmt_check' to prevent file fmt check.
 
 Prevent this exception to occur
 
@@ -481,9 +477,7 @@ b02b33f
 
 82b0d0c
 
-### ELIXIR Workflow
-
-#### Add 'gx:interface' hints in tools CWL files
+### Add 'gx:interface' hints in tools CWL files
 
 Example with BUSCO tools
 
@@ -561,7 +555,7 @@ fc5ab08
 
 a1dd63a 
 
-#### Map tar file to Directory CWL type.
+### Map tar file to Directory CWL type.
 
 Use "gx:type: data" in hints section for Directory CWL type, so we
 have the right control in the Galaxy tools form (i.e. to select the
@@ -578,7 +572,7 @@ hints:
 
 8fcf887
 
-#### Temporary fix for search_space_size error.
+### Temporary fix for search_space_size error.
 
 Required int parameter (i.e. non optional) cause error below
 
@@ -628,7 +622,7 @@ Fix
 
 db248cd
 
-#### Replace relative paths with absolute paths.
+### Replace relative paths with absolute paths.
 
 Relative path in cwl workflow file cause error below during workflow import in Galaxy:
 
@@ -715,7 +709,7 @@ steps:
 
 a876284  
 
-#### Use special format in Tools 'label' CWL attribute
+### Use special format in Tools 'label' CWL attribute
 
 Use special format in label attribute in order to include a short name
 which can be easily extracted from the long label.
