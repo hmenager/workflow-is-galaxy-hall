@@ -49,7 +49,7 @@ FIXME
 
 ## Modifications detailed description
 
-For code details, see this document:
+See this document
 
 <https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md>
 
