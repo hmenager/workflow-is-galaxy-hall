@@ -1,8 +1,6 @@
-# Intro
+# Documentation
 
 This document contains various links related to Galaxy-CWL implementation and test.
-
-# Documentation
 
 ## Hackathon Nov 2018
 
