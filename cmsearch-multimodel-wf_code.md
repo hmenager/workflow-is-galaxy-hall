@@ -1,9 +1,7 @@
 
-# Running *cmsearch-multimodel-wf* in Galaxy-CWL - Annex&nbsp;1
+# Running *cmsearch-multimodel-wf* in Galaxy-CWL - Annex&nbsp;1 - Exceptions encountered and temporary fixes
 
-## Exceptions encountered and temporary fixes
-
-### Enable CWL workflow execution with GUI
+## Enable CWL workflow execution with GUI
 
 Errors:
 
