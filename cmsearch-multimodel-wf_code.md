@@ -1,8 +1,8 @@
 
 # Running *cmsearch-multimodel-wf* in Galaxy-CWL - Annex&nbsp;1 - Exceptions encountered and temporary fixes
 
-[Add *gx:interface* hints in CWL files](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#add-gxinterface-hints-in-cwl-files)
-[*required int parameter* not working](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#required-int-parameter-not-working)
+1. [Add *gx:interface* hints in CWL files](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#add-gxinterface-hints-in-cwl-files)
+2. [*required int parameter* not working](#required-int-parameter-not-working)
 
 ## Add *gx:interface* hints in CWL files
 
