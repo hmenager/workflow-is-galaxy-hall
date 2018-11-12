@@ -24,7 +24,7 @@ Overview
 
 <https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf.md>
 
-Code modifications
+Code modification
 
 <https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md>
 
