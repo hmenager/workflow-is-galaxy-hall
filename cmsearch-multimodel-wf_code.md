@@ -44,6 +44,94 @@ Fix
 
 9e0d85b  
 
+## Replace relative paths with absolute paths.
+
+Relative path in cwl workflow file cause error below during workflow import in Galaxy:
+
+```
+Traceback (most recent call last):
+  File "lib/galaxy/web/framework/decorators.py", line 281, in decorator
+	rval = func(self, trans, *args, **kwargs)
+  File "lib/galaxy/webapps/galaxy/api/workflows.py", line 320, in create
+	return self.__api_import_from_archive(trans, archive_data, "uploaded file", from_path=os.path.abspath(uploaded_file_name))
+  File "lib/galaxy/webapps/galaxy/api/workflows.py", line 582, in __api_import_from_archive
+	workflow, missing_tool_tups = self._workflow_from_dict(trans, data, source=source)
+  File "lib/galaxy/web/base/controller.py", line 1251, in _workflow_from_dict
+	exact_tools=exact_tools,
+  File "lib/galaxy/managers/workflows.py", line 226, in build_workflow_from_dict
+	wf_proxy = workflow_proxy(data["path"])
+  File "lib/galaxy/tools/cwl/parser.py", line 85, in workflow_proxy
+	workflow = to_cwl_workflow_object(workflow_path, strict_cwl_validation=strict_cwl_validation)
+  File "lib/galaxy/tools/cwl/parser.py", line 169, in to_cwl_workflow_object
+	cwl_workflow = _schema_loader(strict_cwl_validation).tool(path=workflow_path)
+  File "lib/galaxy/tools/cwl/schema.py", line 61, in tool
+	process_definition = self.process_definition(raw_process_reference)
+  File "lib/galaxy/tools/cwl/schema.py", line 44, in process_definition
+	raw_reference.uri,
+  File "/home/foobar/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/load_tool.py", line 276, in validate_document
+	workflowobj, fileuri, checklinks=do_validate)
+  File "/home/foobar/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/schema_salad/ref_resolver.py", line 918, in resolve_all
+	self.validate_links(document, u"", all_doc_ids)
+  File "/home/foobar/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/schema_salad/ref_resolver.py", line 1090, in validate_links
+	raise errors[0]
+ValidationException: database/tmp/tmpM55sBv:21:1: checking field `steps`
+database/tmp/tmpM55sBv:44:5:   checking object `database/tmp/tmpM55sBv#concatenate_matches`
+database/tmp/tmpM55sBv:51:5:     Field `run` contains undefined reference to `file:///home/foobar/snapshot/galaxy/database/utils/concatenate.cwl`
+database/tmp/tmpM55sBv:52:5:   checking object `database/tmp/tmpM55sBv#remove_overlaps`
+database/tmp/tmpM55sBv:60:5:     Field `run` contains undefined reference to `file:///home/foobar/snapshot/galaxy/database/tools/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl`
+```
+
+Fix
+
+```
+steps:
+  - id: cmsearch
+    in:
+      - id: covariance_model_database
+        source: covariance_models
+      - id: cpu
+        source: cores
+      - id: omit_alignment_section
+        default: true
+      - id: only_hmm
+        default: true
+      - id: query_sequences
+        source: query_sequences
+      - id: search_space_size
+        default: 1000
+    out:
+      - id: matches
+      - id: programOutput
+    run: /home/jra001k/snapshot/pasteur/workflow-is-cwl/tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl
+    #run: ../tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl
+    label: Search sequence(s) against a covariance model database
+    scatter:
+      - covariance_model_database
+  - id: concatenate_matches
+    in:
+      - id: files
+        source:
+          - cmsearch/matches
+    out:
+      - id: result
+    run: /home/jra001k/snapshot/pasteur/workflow-is-cwl/utils/concatenate.cwl
+    #run: ../utils/concatenate.cwl
+  - id: remove_overlaps
+    in:
+      - id: clan_information
+        source: clan_info
+      - id: cmsearch_matches
+        source: concatenate_matches/result
+    out:
+      - id: deoverlapped_matches
+    run: /home/jra001k/snapshot/pasteur/workflow-is-cwl/tools/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl
+    #run: ../tools/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl
+    label: Remove lower scoring overlaps from cmsearch --tblout files.
+```
+
+a876284  
+
+
 ## Enable CWL workflow import with GUI
 
 Error
@@ -120,6 +208,31 @@ class CommandLineToolProxy(ToolProxy):
 
 ad2f92b  
 
+Use special format in Tools 'label' CWL attribute
+
+Use special format in label attribute in order to include a short name
+which can be easily extracted from the long label.
+
+This short name will be displayed in Galaxy left panel to identify the tools.
+
+Example
+
+```
+label: Remove lower scoring overlaps from cmsearch --tblout files.                                                                                                                                                                 
+```
+
+become
+
+```
+label: >-                                                                                                                                                                                                                          
+  Cmsearch-deoverlap: Remove lower scoring overlaps from cmsearch --tblout files.                                                                                                                                                  
+```
+
+In this example, the short name is 'Cmsearch-deoverlap'.
+
+8096119  
+
+
 ## Map tar file to 'Directory' type.
 
 Patch
@@ -152,6 +265,23 @@ for k, v in input_json.iteritems():
 ```
 
 22cc09f  
+
+Map tar file to Directory CWL type.
+
+Use "gx:type: data" in hints section for Directory CWL type, so we
+have the right control in the Galaxy tools form (i.e. to select the
+tar file).
+
+```
+hints:
+  - class: gx:interface
+    gx:inputs:
+      - gx:name: tempPath
+        gx:type: data
+        gx:optional: True
+```
+
+8fcf887
 
 Alternative (not used for now)
 
@@ -359,52 +489,7 @@ Fix in lib/galaxy/tools/cwl/parser.py
 
 2956b44
 
-## Prevent call to get_size() when dataset is None.
-
-Error
-
-```
-galaxy.jobs.runners ERROR 2018-07-24 09:00:41,003 [p:27394,w:1,m:0] [LocalRunner.work_thread-0] (174) Failure preparing job
-Traceback (most recent call last):
-  File "lib/galaxy/jobs/runners/__init__.py", line 192, in prepare_job    
-    job_wrapper.prepare()
-  File "lib/galaxy/jobs/__init__.py", line 869, in prepare
-    tool_evaluator.set_compute_environment(compute_environment, get_special=get_special)
-  File "lib/galaxy/tools/evaluation.py", line 118, in set_compute_environment
-    self.tool.exec_before_job(self.app, inp_data, out_data, param_dict)
-  File "lib/galaxy/tools/__init__.py", line 2407, in exec_before_job
-    input_json = self.param_dict_to_cwl_inputs(param_dict, local_working_directory)
-  File "lib/galaxy/tools/__init__.py", line 2482, in param_dict_to_cwl_inputs
-    input_json = galactic_flavored_to_cwl_job(self, param_dict, local_working_directory)
-  File "lib/galaxy/tools/cwl/representation.py", line 216, in galactic_flavored_to_cwl_job
-    inputs_at_depth[map_to] = dataset_wrapper_to_file_json(inputs_dir, param_dict[input_name])
-  File "lib/galaxy/tools/cwl/representation.py", line 163, in dataset_wrapper_to_file_json
-    raw_file_object["size"] = int(dataset_wrapper.get_size())
-
-TypeError: 
-'SafeStringWrapper(str:<class 'galaxy.tools.wrappers.ToolParameterValueWrapper'>, 
-<class 'galaxy.util.object_wrapper.SafeStringWrapper'>, <class 'numbers>, <type 'NoneType'>, 
-<type 'NotImplementedT' object is not callable
-```
-
-Fix
-
-```
-def dataset_wrapper_to_file_json(inputs_dir, dataset_wrapper):
-
-    ...
-
-    raw_file_object["location"] = path
-
-    if not isinstance(dataset_wrapper.unsanitized, NoneDataset):
-        raw_file_object["size"] = int(dataset_wrapper.get_size())
-```
-
-1657c6d
-
-2d2ec56 (duplicate)
-
-## Add 'beta_relaxed_fmt_check' to prevent file fmt check.
+Add 'beta_relaxed_fmt_check' to prevent file fmt check.
 
 Prevent this exception to occur
 
@@ -476,6 +561,52 @@ b02b33f
 
 82b0d0c
 
+
+## Prevent call to get_size() when dataset is None.
+
+Error
+
+```
+galaxy.jobs.runners ERROR 2018-07-24 09:00:41,003 [p:27394,w:1,m:0] [LocalRunner.work_thread-0] (174) Failure preparing job
+Traceback (most recent call last):
+  File "lib/galaxy/jobs/runners/__init__.py", line 192, in prepare_job    
+    job_wrapper.prepare()
+  File "lib/galaxy/jobs/__init__.py", line 869, in prepare
+    tool_evaluator.set_compute_environment(compute_environment, get_special=get_special)
+  File "lib/galaxy/tools/evaluation.py", line 118, in set_compute_environment
+    self.tool.exec_before_job(self.app, inp_data, out_data, param_dict)
+  File "lib/galaxy/tools/__init__.py", line 2407, in exec_before_job
+    input_json = self.param_dict_to_cwl_inputs(param_dict, local_working_directory)
+  File "lib/galaxy/tools/__init__.py", line 2482, in param_dict_to_cwl_inputs
+    input_json = galactic_flavored_to_cwl_job(self, param_dict, local_working_directory)
+  File "lib/galaxy/tools/cwl/representation.py", line 216, in galactic_flavored_to_cwl_job
+    inputs_at_depth[map_to] = dataset_wrapper_to_file_json(inputs_dir, param_dict[input_name])
+  File "lib/galaxy/tools/cwl/representation.py", line 163, in dataset_wrapper_to_file_json
+    raw_file_object["size"] = int(dataset_wrapper.get_size())
+
+TypeError: 
+'SafeStringWrapper(str:<class 'galaxy.tools.wrappers.ToolParameterValueWrapper'>, 
+<class 'galaxy.util.object_wrapper.SafeStringWrapper'>, <class 'numbers>, <type 'NoneType'>, 
+<type 'NotImplementedT' object is not callable
+```
+
+Fix
+
+```
+def dataset_wrapper_to_file_json(inputs_dir, dataset_wrapper):
+
+    ...
+
+    raw_file_object["location"] = path
+
+    if not isinstance(dataset_wrapper.unsanitized, NoneDataset):
+        raw_file_object["size"] = int(dataset_wrapper.get_size())
+```
+
+1657c6d
+
+2d2ec56 (duplicate)
+
 ## Add 'gx:interface' hints in tools CWL files
 
 Example with BUSCO tools
@@ -536,44 +667,11 @@ hints:
         gx:optional: True
 ```
 
-92ee2b9 
-
 2d96dbc
 
-7d0a7ad
+## Fix error caused by required int parameter (i.e. non optional)
 
-abc3d8f 
-
-d9d1610 
-
-e5cb9a7 
-
-5e11714 
-
-fc5ab08 
-
-a1dd63a 
-
-## Map tar file to Directory CWL type.
-
-Use "gx:type: data" in hints section for Directory CWL type, so we
-have the right control in the Galaxy tools form (i.e. to select the
-tar file).
-
-```
-hints:
-  - class: gx:interface
-    gx:inputs:
-      - gx:name: tempPath
-        gx:type: data
-        gx:optional: True
-```
-
-8fcf887
-
-## Temporary fix for search_space_size error.
-
-Required int parameter (i.e. non optional) cause error below
+Error
 
 ```
 galaxy.jobs.runners ERROR 2018-07-24 17:10:22,683 [p:2318,w:1,m:0] [LocalRunner.work_thread-0] (187) Failure preparing job
@@ -620,117 +718,6 @@ Fix
 ```
 
 db248cd
-
-## Replace relative paths with absolute paths.
-
-Relative path in cwl workflow file cause error below during workflow import in Galaxy:
-
-```
-Traceback (most recent call last):
-  File "lib/galaxy/web/framework/decorators.py", line 281, in decorator
-	rval = func(self, trans, *args, **kwargs)
-  File "lib/galaxy/webapps/galaxy/api/workflows.py", line 320, in create
-	return self.__api_import_from_archive(trans, archive_data, "uploaded file", from_path=os.path.abspath(uploaded_file_name))
-  File "lib/galaxy/webapps/galaxy/api/workflows.py", line 582, in __api_import_from_archive
-	workflow, missing_tool_tups = self._workflow_from_dict(trans, data, source=source)
-  File "lib/galaxy/web/base/controller.py", line 1251, in _workflow_from_dict
-	exact_tools=exact_tools,
-  File "lib/galaxy/managers/workflows.py", line 226, in build_workflow_from_dict
-	wf_proxy = workflow_proxy(data["path"])
-  File "lib/galaxy/tools/cwl/parser.py", line 85, in workflow_proxy
-	workflow = to_cwl_workflow_object(workflow_path, strict_cwl_validation=strict_cwl_validation)
-  File "lib/galaxy/tools/cwl/parser.py", line 169, in to_cwl_workflow_object
-	cwl_workflow = _schema_loader(strict_cwl_validation).tool(path=workflow_path)
-  File "lib/galaxy/tools/cwl/schema.py", line 61, in tool
-	process_definition = self.process_definition(raw_process_reference)
-  File "lib/galaxy/tools/cwl/schema.py", line 44, in process_definition
-	raw_reference.uri,
-  File "/home/foobar/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/load_tool.py", line 276, in validate_document
-	workflowobj, fileuri, checklinks=do_validate)
-  File "/home/foobar/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/schema_salad/ref_resolver.py", line 918, in resolve_all
-	self.validate_links(document, u"", all_doc_ids)
-  File "/home/foobar/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/schema_salad/ref_resolver.py", line 1090, in validate_links
-	raise errors[0]
-ValidationException: database/tmp/tmpM55sBv:21:1: checking field `steps`
-database/tmp/tmpM55sBv:44:5:   checking object `database/tmp/tmpM55sBv#concatenate_matches`
-database/tmp/tmpM55sBv:51:5:     Field `run` contains undefined reference to `file:///home/foobar/snapshot/galaxy/database/utils/concatenate.cwl`
-database/tmp/tmpM55sBv:52:5:   checking object `database/tmp/tmpM55sBv#remove_overlaps`
-database/tmp/tmpM55sBv:60:5:     Field `run` contains undefined reference to `file:///home/foobar/snapshot/galaxy/database/tools/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl`
-```
-
-Fix
-
-```
-steps:
-  - id: cmsearch
-    in:
-      - id: covariance_model_database
-        source: covariance_models
-      - id: cpu
-        source: cores
-      - id: omit_alignment_section
-        default: true
-      - id: only_hmm
-        default: true
-      - id: query_sequences
-        source: query_sequences
-      - id: search_space_size
-        default: 1000
-    out:
-      - id: matches
-      - id: programOutput
-    run: /home/jra001k/snapshot/pasteur/workflow-is-cwl/tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl
-    #run: ../tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl
-    label: Search sequence(s) against a covariance model database
-    scatter:
-      - covariance_model_database
-  - id: concatenate_matches
-    in:
-      - id: files
-        source:
-          - cmsearch/matches
-    out:
-      - id: result
-    run: /home/jra001k/snapshot/pasteur/workflow-is-cwl/utils/concatenate.cwl
-    #run: ../utils/concatenate.cwl
-  - id: remove_overlaps
-    in:
-      - id: clan_information
-        source: clan_info
-      - id: cmsearch_matches
-        source: concatenate_matches/result
-    out:
-      - id: deoverlapped_matches
-    run: /home/jra001k/snapshot/pasteur/workflow-is-cwl/tools/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl
-    #run: ../tools/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl
-    label: Remove lower scoring overlaps from cmsearch --tblout files.
-```
-
-a876284  
-
-## Use special format in Tools 'label' CWL attribute
-
-Use special format in label attribute in order to include a short name
-which can be easily extracted from the long label.
-
-This short name will be displayed in Galaxy left panel to identify the tools.
-
-Example
-
-```
-label: Remove lower scoring overlaps from cmsearch --tblout files.                                                                                                                                                                 
-```
-
-become
-
-```
-label: >-                                                                                                                                                                                                                          
-  Cmsearch-deoverlap: Remove lower scoring overlaps from cmsearch --tblout files.                                                                                                                                                  
-```
-
-In this example, the short name is 'Cmsearch-deoverlap'.
-
-8096119  
 
 <!-- 
 # vim: tw=70
