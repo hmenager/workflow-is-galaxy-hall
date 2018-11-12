@@ -71,7 +71,7 @@ Code modification details are brought together in this document
 
 ## Demo server
 
-The Demo server contains all the modifications described in this
+The demo server contains all the modifications described in this
 document and can successfully import and run the following workflow:
 https://github.com/hmenager/workflow-is-cwl/workflows/cmsearch-multimodel-wf.cwl
 
