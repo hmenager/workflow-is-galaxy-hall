@@ -2,15 +2,15 @@
 
 ## Overview
 
-cmsearch-multimodel-wf is a CWL Workflow part of ELIXIR project.
+cmsearch-multimodel-wf is a CWL workflow part of ELIXIR project.
 
-In order to run cmsearch-multimodel-wf workflow with Galaxy-CWL, some
-modifications must be made in software and CWL files below
+In order to run *cmsearch-multimodel-wf* workflow with Galaxy-CWL, some
+modifications must be made in software and CWL files below:
 
 * Galaxy-CWL 
 * Cwltool 
-* CWL Tools files
-* CWL Workflow files
+* CWL tools files
+* CWL workflow files
 
 This document describes those modifications.
 
@@ -31,8 +31,8 @@ ELIXIR Workflow
 ## Modifications overview
 
 * Prevent EDAM filetype checking in Cwltool
-* Add 'Directory' type support in Galaxy (using binding between tar-file and directory-type)
-* Add 'gx:interface' hints in CWL tools files
+* Add *Directory* type support in Galaxy (using binding between tar-file and cwl-directory-type)
+* Add *gx:interface* hints in CWL tools files
 * Replace relative-path with absolute-path in 'run' attributes of CWL workflow files (tools links).
 * Call '_init_dynamic_tools' method at Galaxy startup to populate '_tools_by_hash' variable.
 * Assume yaml CWL workflow if exception occurs during json deserialization (when user click on 'import')
