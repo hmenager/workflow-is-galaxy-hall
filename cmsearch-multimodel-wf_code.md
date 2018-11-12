@@ -4,9 +4,7 @@
 
 This section contains a merge of issues from this repository
 
-```
-https://github.com/hmenager/workflow-is-cwl/issues
-```
+<https://github.com/hmenager/workflow-is-cwl/issues>
 
 Each workflow and tools have a dedicated issue (most are now closed, but can be reopen if new problems are found).
 
