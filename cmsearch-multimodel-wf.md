@@ -18,21 +18,15 @@ This document describes those modifications.
 
 Galaxy-CWL
 
-```
-https://github.com/hmenager/galaxy
-```
+<https://github.com/hmenager/galaxy>
 
 Cwltool
 
-```
-https://github.com/hmenager/cwltool
-```
+<https://github.com/hmenager/cwltool>
 
 ELIXIR Workflow
 
-```
-https://github.com/hmenager/workflow-is-cwl
-```
+<https://github.com/hmenager/workflow-is-cwl>
 
 ## Modifications overview
 
