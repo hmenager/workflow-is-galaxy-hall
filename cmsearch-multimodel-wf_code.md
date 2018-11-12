@@ -1,8 +1,18 @@
 
 # Running *cmsearch-multimodel-wf* in Galaxy-CWL - Annex&nbsp;1 - Exceptions encountered and temporary fixes
 
-1. [Add *gx:interface* hints in CWL files](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#add-gxinterface-hints-in-cwl-files)
+1. [Add *gx:interface* hints in CWL files](#add-gxinterface-hints-in-cwl-files)
 2. [*required int parameter* not working](#required-int-parameter-not-working)
+3. [Prevent flooding Galaxy left panel with large Tools label](#prevent-flooding-galaxy-left-panel-with-large-tools-label)
+4. [Map tar file to *Directory* CWL type]()
+5. [Add missing mapping between Galaxy type and CWL type]()
+6. [Prevent unset optional file to trigger *ValidationException* exception]()
+7. [Add *beta_relaxed_fmt_check* to prevent file fmt check]()
+8. [Prevent call to get_size() when dataset is None]()
+9. [Rename *Test Dataset*]()
+10. [Enable CWL workflow import with GUI]()
+11. [Replace relative paths with absolute paths]()
+12. [Enable CWL workflow execution with GUI]()
 
 ## Add *gx:interface* hints in CWL files
 
@@ -146,7 +156,7 @@ label: >-
 
 8096119 (*workflow-is-cwl* repo)
 
-## Map tar file to 'Directory' CWL type.
+## Map tar file to *Directory* CWL type
 
 ### Patch
 
@@ -247,7 +257,7 @@ lib/galaxy/datatypes/converters/tar_to_directory.xml
 </tool>
 ```
 
-## Add missing mapping between Galaxy type and CWL type.
+## Add missing mapping between Galaxy type and CWL type
 
 ```
     def galactic_flavored_to_cwl_job(tool, param_dict, local_working_directory):
@@ -271,7 +281,7 @@ lib/galaxy/datatypes/converters/tar_to_directory.xml
 
 64f6b95  (*galaxy* repo)
 
-## Prevent unset optional file to trigger 'ValidationException' exception
+## Prevent unset optional file to trigger *ValidationException* exception
 
 ### Exception
 
@@ -324,7 +334,7 @@ ValidationException: [Errno 2] No such file or directory: '/home/jra001k/snapsho
 
 2e55c1c  (*galaxy* repo)
 
-## Add 'beta_relaxed_fmt_check' to prevent file fmt check.
+## Add *beta_relaxed_fmt_check* to prevent file fmt check
 
 ### Exception
 
@@ -417,7 +427,7 @@ def bind_input(self, schema, datum, lead_pos=None, tail_pos=None, discover_secon
 
 b02b33f, 82b0d0c (*cwltool* repo)
 
-## Prevent call to get_size() when dataset is None.
+## Prevent call to get_size() when dataset is None
 
 ### Exception
 
@@ -460,7 +470,7 @@ def dataset_wrapper_to_file_json(inputs_dir, dataset_wrapper):
 
 1657c6d (*galaxy* repo)
 
-## Rename "Test Dataset".
+## Rename *Test Dataset*
 
 ### Exception
 
@@ -513,7 +523,7 @@ raise exceptions.MessageException("The data content does not appear to be a vali
 
 f2a4645 (*galaxy* repo)
 
-## Replace relative paths with absolute paths.
+## Replace relative paths with absolute paths
 
 ### Exception
 
