@@ -1,4 +1,4 @@
-# *cmsearch-multimodel-wf* workflow test with Galaxy-CWL
+# Running *cmsearch-multimodel-wf* in Galaxy-CWL
 
 ## Overview
 
