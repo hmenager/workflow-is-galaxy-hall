@@ -67,7 +67,7 @@ Code modification details are brought together in this document
 
 The demo server contains all the modifications described in this
 document and can successfully import and run the following workflow:
-https://github.com/hmenager/workflow-is-cwl/workflows/cmsearch-multimodel-wf.cwl
+https://github.com/hmenager/workflow-is-cwl/blob/master/workflows/cmsearch-multimodel-wf.cwl
 
 * Url: http://sd-104052.dedibox.fr:8083
 * Authentication login: democwl
