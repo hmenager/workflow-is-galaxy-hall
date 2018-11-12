@@ -11,7 +11,7 @@
 8. [Prevent call to get_size() when dataset is None](#prevent-call-to-get_size-when-dataset-is-none)
 9. [Rename *Test Dataset*](#rename-test-dataset)
 10. [Enable CWL workflow import with GUI](#enable-cwl-workflow-import-with-gui)
-11. [Replace relative paths with absolute paths](##replace-relative-paths-with-absolute-paths)
+11. [Replace relative paths with absolute paths](#replace-relative-paths-with-absolute-paths)
 12. [Enable CWL workflow execution with GUI](#enable-cwl-workflow-execution-with-gui)
 
 ## Add *gx:interface* hints in CWL files
