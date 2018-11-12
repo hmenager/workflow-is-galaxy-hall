@@ -49,7 +49,7 @@ FIXME
 
 ## Modifications detailed description
 
-See this document
+Code modification details are brought together in this document
 
 <https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md>
 
@@ -78,6 +78,26 @@ See this document
 The DEMO server contains all the modifications described in this
 document and can successfully import and run the following workflow:
 https://github.com/hmenager/workflow-is-cwl/workflows/cmsearch-multimodel-wf.cwl
+
+## Annex
+
+Annex 1
+
+Code modification details
+
+<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md>
+
+Annex 2
+
+Demo server installation guide
+
+<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_demosrvinst.md>
+
+Annex 3
+
+Demo procedure
+
+<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_demo.md>
 
 <!-- 
 # vim: tw=70

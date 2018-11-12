@@ -1,4 +1,4 @@
-# Running *cmsearch-multimodel-wf* in Galaxy-CWL - annexe 3
+# Running *cmsearch-multimodel-wf* in Galaxy-CWL - annex 3
 
 ## *cmsearch-multimodel-wf* demo procedure
 

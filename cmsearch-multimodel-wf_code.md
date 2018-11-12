@@ -1,4 +1,4 @@
-# Running *cmsearch-multimodel-wf* in Galaxy-CWL - annexe 1
+# Running *cmsearch-multimodel-wf* in Galaxy-CWL - annex 1
 
 ## Exceptions encountered and temporary fixes
 
