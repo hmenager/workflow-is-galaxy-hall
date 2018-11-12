@@ -2,18 +2,11 @@
 
 ## Exceptions encountered and temporary fixes
 
-This section contains a merge of issues from this repository
-
-<https://github.com/hmenager/workflow-is-cwl/issues>
-
-Each workflow and tools have a dedicated issue (most are now closed, but can be reopen if new problems are found).
-
 ### Galaxy-CWL
 
 #### Enable CWL workflow execution with GUI
 
-'_tools_by_hash' must be initialized at galaxy startup to prevent error below
-(which occurs when running a CWL workflow):
+Errors:
 
 ```
 Traceback (most recent call last):
@@ -40,8 +33,6 @@ Traceback (most recent call last):
 KeyError: u'e4de79296ec91ab9b8d8d9d71f94044a2561c01b9fc708e5197d432b453fa297'
 ```
 
-'filter' has been replaced by 'filter_by' to prevent error below:
-
 ```
   File "lib/galaxy/workflow/modules.py", line 771, in __init__
     trans.app.toolbox._init_dynamic_tools()
@@ -52,17 +43,19 @@ KeyError: u'e4de79296ec91ab9b8d8d9d71f94044a2561c01b9fc708e5197d432b453fa297'
 TypeError: filter() got an unexpected keyword argument 'active'
 ```
 
+Fix
+
 9e0d85b  
 
 #### Enable CWL workflow import with GUI
 
-To prevent exception below
+Error
 
 ```
 raise exceptions.MessageException("The data content does not appear to be a valid workflow.")
 ```
 
-used the hack below
+Fix
 
 ```
   def __api_import_from_archive(self, trans, archive_data, source=None, from_path=None):
@@ -86,7 +79,7 @@ f2a4645
 
 #### Rename "Test Dataset".
 
-To prevent error below when running CWL workflow 'test_simplest_wf' test
+Error
 
 ```
   File "/home/jra001k/snapshot/pasteur/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/pathmapper.py", line 46, in visit_class
@@ -96,7 +89,7 @@ To prevent error below when running CWL workflow 'test_simplest_wf' test
 WorkflowException: Invalid filename: 'Test Dataset' contains illegal characters
 ```
 
-replaced space with underscore ('Test Dataset' to 'Test_Dataset') in test/base/populators.py
+Fix
 
 ```
 def upload_payload(self, history_id, content=None, **kwds):
@@ -108,6 +101,8 @@ def upload_payload(self, history_id, content=None, **kwds):
 7827974
 
 #### Prevent flooding Galaxy left panel with tools description and label.
+
+Patch
 
 ```
 class CommandLineToolProxy(ToolProxy):
@@ -129,6 +124,8 @@ class CommandLineToolProxy(ToolProxy):
 ad2f92b  
 
 #### Map tar file to 'Directory' type.
+
+Patch
 
 ```
 
@@ -159,7 +156,34 @@ for k, v in input_json.iteritems():
 
 22cc09f  
 
-Related code (not used for now)
+Alternative (not used for now)
+
+```
+parameter_types = dict(
+    text=TextToolParameter,
+    integer=IntegerToolParameter,
+    float=FloatToolParameter,
+    boolean=BooleanToolParameter,
+    genomebuild=GenomeBuildParameter,
+    select=SelectToolParameter,
+    color=ColorToolParameter,
+    data_column=ColumnListParameter,
+    hidden=HiddenToolParameter,
+    hidden_data=HiddenDataToolParameter,
+    baseurl=BaseURLToolParameter,
+    file=FileToolParameter,
+    ftpfile=FTPFileToolParameter,
+    genomespacefile=GenomespaceFileToolParameter,
+    data=DataToolParameter,
+    data_collection=DataCollectionToolParameter,
+    library_data=LibraryDatasetToolParameter,
+    rules=RulesListToolParameter,
+    field=FieldTypeToolParameter,
+    drill_down=DrillDownSelectToolParameter
+)
+#directory=DataToolParameter
+#directory=FileToolParameter
+```
 
 ```
 convert_response = self.dataset_populator.run_tool(
@@ -187,33 +211,6 @@ lib/galaxy/datatypes/converters/tar_to_directory.xml
     <help>
     </help>
 </tool>
-```
-
-```
-parameter_types = dict(
-    text=TextToolParameter,
-    integer=IntegerToolParameter,
-    float=FloatToolParameter,
-    boolean=BooleanToolParameter,
-    genomebuild=GenomeBuildParameter,
-    select=SelectToolParameter,
-    color=ColorToolParameter,
-    data_column=ColumnListParameter,
-    hidden=HiddenToolParameter,
-    hidden_data=HiddenDataToolParameter,
-    baseurl=BaseURLToolParameter,
-    file=FileToolParameter,
-    ftpfile=FTPFileToolParameter,
-    genomespacefile=GenomespaceFileToolParameter,
-    data=DataToolParameter,
-    data_collection=DataCollectionToolParameter,
-    library_data=LibraryDatasetToolParameter,
-    rules=RulesListToolParameter,
-    field=FieldTypeToolParameter,
-    drill_down=DrillDownSelectToolParameter
-)
-#directory=DataToolParameter
-#directory=FileToolParameter
 ```
 
 #### Add missing mapping between Galaxy type and CWL type.
