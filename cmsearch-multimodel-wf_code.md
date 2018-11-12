@@ -4,15 +4,15 @@
 1. [Add *gx:interface* hints in CWL files](#add-gxinterface-hints-in-cwl-files)
 2. [*required int parameter* not working](#required-int-parameter-not-working)
 3. [Prevent flooding Galaxy left panel with large Tools label](#prevent-flooding-galaxy-left-panel-with-large-tools-label)
-4. [Map tar file to *Directory* CWL type]()
-5. [Add missing mapping between Galaxy type and CWL type]()
-6. [Prevent unset optional file to trigger *ValidationException* exception]()
-7. [Add *beta_relaxed_fmt_check* to prevent file fmt check]()
-8. [Prevent call to get_size() when dataset is None]()
-9. [Rename *Test Dataset*]()
-10. [Enable CWL workflow import with GUI]()
-11. [Replace relative paths with absolute paths]()
-12. [Enable CWL workflow execution with GUI]()
+4. [Map tar file to *Directory* CWL type](#map-tar-file-to-directory-cwl-type)
+5. [Add missing mapping between Galaxy type and CWL type](#add-missing-mapping-between-galaxy-type-and-cwl-type)
+6. [Prevent *unset optional file* to trigger *ValidationException*]()
+7. [Add *beta_relaxed_fmt_check* to prevent file fmt check](#add-beta_relaxed_fmt_check-to-prevent-file-fmt-check)
+8. [Prevent call to get_size() when dataset is None](#prevent-call-to-get_size-when-dataset-is-none)
+9. [Rename *Test Dataset*](#rename-test-dataset)
+10. [Enable CWL workflow import with GUI](#enable-cwl-workflow-import-with-gui)
+11. [Replace relative paths with absolute paths](##replace-relative-paths-with-absolute-paths)
+12. [Enable CWL workflow execution with GUI](#enable-cwl-workflow-execution-with-gui)
 
 ## Add *gx:interface* hints in CWL files
 
@@ -281,7 +281,7 @@ lib/galaxy/datatypes/converters/tar_to_directory.xml
 
 64f6b95  (*galaxy* repo)
 
-## Prevent unset optional file to trigger *ValidationException* exception
+## Prevent *unset optional file* to trigger *ValidationException*
 
 ### Exception
 
