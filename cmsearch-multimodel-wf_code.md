@@ -1,9 +1,9 @@
 
 # Running *cmsearch-multimodel-wf* in Galaxy-CWL - Annex&nbsp;1 - Exceptions encountered and temporary fixes
 
-## Add 'gx:interface' hints in tools CWL files
+## Add 'gx:interface' hints in CWL files
 
-Example with BUSCO tools
+Example with BUSCO Tools
 
 ```
 hints:
@@ -63,7 +63,7 @@ hints:
 
 2d96dbc (*workflow-is-cwl* repo)
 
-## Fix error caused by required int parameter (i.e. non optional int parameter)
+## *required int parameter* not working
 
 ```
   - id: search_space_size
