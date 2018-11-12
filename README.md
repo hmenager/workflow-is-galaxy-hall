@@ -10,7 +10,7 @@
 
 ## Development environment setup
 
-<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/devenvsetup.md>
+<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/dev_env_setup.md>
 
 ## Issues
 
