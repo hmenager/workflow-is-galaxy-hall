@@ -37,3 +37,31 @@ Demo
 <https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_demosrvinst.md>
 
 <https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_demo.md>
+
+## Repositories fork
+
+Galaxy-CWL
+
+<https://github.com/hmenager/galaxy>
+
+Cwltool
+
+<https://github.com/hmenager/cwltool>
+
+ELIXIR Workflow
+
+<https://github.com/hmenager/workflow-is-cwl>
+
+## Original repositories
+
+Galaxy-CWL
+
+<https://github.com/common-workflow-language/galaxy>
+
+Cwltool
+
+<https://github.com/common-workflow-language/cwltool>
+
+ELIXIR Workflow
+
+<https://github.com/mscheremetjew/workflow-is-cwl>
