@@ -71,9 +71,9 @@ https://github.com/hmenager/workflow-is-cwl/workflows/cmsearch-multimodel-wf.cwl
 
 * Url: http://sd-104052.dedibox.fr:8083
 * Authentication login: democwl
-* Galaxy demo user: demo-g-cwl-is.test
+* Galaxy demo user: demo@g-cwl-is.test
 
-## Annex
+## Annexes
 
 Annex 1
 
