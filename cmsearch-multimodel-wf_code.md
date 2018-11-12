@@ -642,6 +642,43 @@ TypeError: filter() got an unexpected keyword argument 'active'
 
 Fix
 
+```
+  class UniverseApplication(config.ConfiguresGalaxyMixin):
+      """Encapsulates the state of a Universe application"""
+  
+      def __init__(self, **kwargs):
+  
+          ...
+  
+          self.toolbox._init_dynamic_tools()
+  
+          ...
+
+```
+
+```
+def list_tools(self, active=True):
+    return self.query().filter_by(active=active)
+```
+
+```
+      def _workflow_to_dict_run(self, trans, stored):
+          """
+          Builds workflow dictionary used by run workflow form
+          """
+  
+          ...
+  
+          for step in workflow.steps:
+              step_model = None
+              if step.type == 'tool':
+                  assert step.tool_id or step.tool_hash
+                  incoming = {}
+                  tool = trans.app.toolbox.get_tool(step.tool_id, tool_version=step.tool_version, tool_hash=step.tool_hash)
+  
+          ...
+```
+
 9e0d85b (*galaxy* repo)
 
 <!-- 
