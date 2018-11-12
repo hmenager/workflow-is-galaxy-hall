@@ -8,7 +8,7 @@
 
 <https://docs.google.com/presentation/d/1zXpOhJDeVYs-J-1jt0rz7gox10o78cFqshiM-wy8Xh0/edit#slide=id.p1>
 
-# Development environment setup
+## Development environment setup
 
 <https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/devenvsetup.md>
 
