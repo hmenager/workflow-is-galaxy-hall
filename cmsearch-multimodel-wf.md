@@ -58,6 +58,8 @@ ELIXIR Workflow
 Currently, before runnning a CWL workflow in Galaxy, all CWL tools used by the
 workflow must be manually modified to add those bindings.
 
+[More info](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#add-gxinterface-hints-in-cwl-files)
+
 ### *required int parameter* not working
 
 Required int parameter (i.e. non optional) cause error below
@@ -77,6 +79,8 @@ As a temporary fix, the Tools CWL file is modified to set the parameter as optio
   - id: search_space_size
     type: int?
 ```
+
+[More info](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#required-int-parameter-not-working)
 
 ### Prevent flooding Galaxy left panel with large Tools label
 
@@ -102,6 +106,8 @@ label: >-
 ```
 
 In this example, the short name is 'Cmsearch-deoverlap'.
+
+[More info](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#prevent-flooding-galaxy-left-panel-with-large-tools-label)
 
 ### Map tar file to *Directory* CWL type
 
@@ -181,6 +187,8 @@ lib/galaxy/datatypes/converters/tar_to_directory.xml
 </tool>
 ```
 
+[More info](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#map-tar-file-to-directory-cwl-type)
+
 ### Add missing mappings between Galaxy type and CWL type
 
 BUSCO Tool execution fails because some CWL parameter types (e.g. string,
@@ -191,6 +199,8 @@ galactic_flavored_to_cwl_job().
 
 To fix the problem, type mapping code has been duplicated from to_cwl_job() to
 galactic_flavored_to_cwl_job().
+
+[More info](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#add-missing-mapping-between-galaxy-type-and-cwl-type)
 
 ### Prevent *unset optional file* to trigger *ValidationException*
 
@@ -206,6 +216,8 @@ method. It removes unset dataset from the input dataset list.
 ```
 input_json = {k:v for k, v in input_json.iteritems() if not (isinstance(v, dict) and v['class'] == 'File' and v['location'] == 'None')}
 ```
+
+[More info](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#prevent-unset-optional-file-to-trigger-validationexception)
 
 ### Add *beta_relaxed_fmt_check* to prevent file format check
 
@@ -229,6 +241,8 @@ WorkflowException: Expected value of 'inputRefDBFile' to have format http://edam
 
 To prevent this exception to occur, *beta_relaxed_fmt_check* option has been
 added in Cwltool to disable EDAM format checking.
+
+[More info](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#add-beta_relaxed_fmt_check-to-prevent-file-fmt-check)
 
 ### Prevent call to get_size() when dataset is None
 
@@ -259,6 +273,8 @@ def dataset_wrapper_to_file_json(inputs_dir, dataset_wrapper):
         raw_file_object["size"] = int(dataset_wrapper.get_size())
 ```
 
+[More info](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#prevent-call-to-get_size-when-dataset-is-none)
+
 ### Rename *Test Dataset*
 
 When running CwlWorkflowsTestCase.test_simplest_wf test, exception below occurs:
@@ -271,6 +287,8 @@ This is caused by space character in the dataset name, in *upload_payload*
 method in test/base/populators.py.
 
 To prevent the exception, the dataset has been renamed replacing space with underscore.
+
+[More info](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#rename-test-dataset)
 
 ### Enable CWL workflow import with GUI
 
@@ -286,6 +304,8 @@ A hack has been set up in Galaxy (in *__api_import_from_archive* method) to use
 *from_path* argument as an alternative route, if a JSON exception occurs.
 
 This hack allows to import a CWL workflow inside Galaxy succesfully.
+
+[More info](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#enable-cwl-workflow-import-with-gui)
 
 ### Replace relative paths with absolute paths
 
@@ -312,6 +332,8 @@ steps:
     #run: ../tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl
 ```
 
+[More info](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#replace-relative-paths-with-absolute-paths)
+
 ### Enable CWL workflow execution with GUI
 
 When executing a CWL workflow in Galaxy, the following exception occurs
@@ -336,6 +358,8 @@ exception below:
     return self.query().filter(active=active)
 TypeError: filter() got an unexpected keyword argument 'active'
 ```
+
+[More info](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#enable-cwl-workflow-execution-with-gui)
 
 ## Modifications detailed description
 
