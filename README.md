@@ -38,6 +38,10 @@ Demo
 
 <https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_demo.md>
 
+*cmsearch-multimodel-wf* Workflow CWL file
+
+https://github.com/hmenager/workflow-is-cwl/blob/master/workflows/cmsearch-multimodel-wf.cwl
+
 ## Repositories fork
 
 Galaxy-CWL
