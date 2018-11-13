@@ -39,7 +39,304 @@ ELIXIR Workflow
 
 ## Modifications description
 
-FIXME
+1. [Add *gx:interface* hints in CWL files](#add-gxinterface-hints-in-cwl-files)
+2. [*required int parameter* not working](#required-int-parameter-not-working)
+3. [Prevent flooding Galaxy left panel with large Tools label](#prevent-flooding-galaxy-left-panel-with-large-tools-label)
+4. [Map tar file to *Directory* CWL type](#map-tar-file-to-directory-cwl-type)
+5. [Add missing mapping between Galaxy type and CWL type](#add-missing-mapping-between-galaxy-type-and-cwl-type)
+6. [Prevent *unset optional file* to trigger *ValidationException*](#prevent-unset-optional-file-to-trigger-validationexception)
+7. [Add *beta_relaxed_fmt_check* to prevent file fmt check](#add-beta_relaxed_fmt_check-to-prevent-file-fmt-check)
+8. [Prevent call to get_size() when dataset is None](#prevent-call-to-get_size-when-dataset-is-none)
+9. [Rename *Test Dataset*](#rename-test-dataset)
+10. [Enable CWL workflow import with GUI](#enable-cwl-workflow-import-with-gui)
+11. [Replace relative paths with absolute paths](#replace-relative-paths-with-absolute-paths)
+12. [Enable CWL workflow execution with GUI](#enable-cwl-workflow-execution-with-gui)
+
+### Add *gx:interface* hints in CWL files
+
+*gx:interface* allows to manually bind a CWL type to a Galaxy type for a given parameter in the Tools CWL file.
+
+Currently, before runnning a CWL workflow in Galaxy, all CWL tools used by the
+workflow must be manually modified to add those bindings.
+
+### *required int parameter* not working
+
+Required int parameter (i.e. non optional) cause error below
+
+```
+  - id: search_space_size
+    type: int
+```
+
+```
+WorkflowException: ../workflow-is-cwl_h/tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl:54:5: Missing required input parameter 'search_space_size'
+```
+
+As a temporary fix, the Tools CWL file is modified to set the parameter as optional.
+
+```
+  - id: search_space_size
+    type: int?
+```
+
+### Prevent flooding Galaxy left panel with large Tools label
+
+Tools *label* in CWL file is too long (up to ten words) to be used in Galaxy
+left panel to identify the tool.
+
+To circumvent this problem, a special format is used in Tools *label* attribute,
+in order to include a short identifier which can be easily extracted.
+
+This short name is then displayed in Galaxy left panel to identify the tool.
+
+Example
+
+```
+label: Remove lower scoring overlaps from cmsearch --tblout files.                                                                                                                                                                 
+```
+
+become
+
+```
+label: >-
+  Cmsearch-deoverlap: Remove lower scoring overlaps from cmsearch --tblout files.                                                                                                                                                  
+```
+
+In this example, the short name is 'Cmsearch-deoverlap'.
+
+### Map tar file to *Directory* CWL type
+
+Directory type does not exist in Galaxy.
+
+To be able to run CWL tools which use Directory CWL type, some modifications
+must be made in Galaxy-CWL code.
+
+A temporary hack has been set up:
+
+    * Tools parameters with Directory type are binded to the *data* Galaxy type
+      using Tools hints section (gx:interface). This will provide the 
+      *Data Selector* control in the Galaxy Tools Form.
+    * A tar file with the directory content is created.
+    * The tar file is uploaded in Galaxy history.
+    * To execute the Tools, the tar file must be used in place of the Directory.
+    * During the run, the tar file is automatically extracted by Galaxy 
+      and a directory is provided to Cwltool.
+
+Note: this hack has serious limitation as it prevents using file with 'tar'
+extension for another purpose than wrapping a directory.
+
+#### Alternative (not used for now)
+
+```
+parameter_types = dict(
+    text=TextToolParameter,
+    integer=IntegerToolParameter,
+    float=FloatToolParameter,
+    boolean=BooleanToolParameter,
+    genomebuild=GenomeBuildParameter,
+    select=SelectToolParameter,
+    color=ColorToolParameter,
+    data_column=ColumnListParameter,
+    hidden=HiddenToolParameter,
+    hidden_data=HiddenDataToolParameter,
+    baseurl=BaseURLToolParameter,
+    file=FileToolParameter,
+    ftpfile=FTPFileToolParameter,
+    genomespacefile=GenomespaceFileToolParameter,
+    data=DataToolParameter,
+    data_collection=DataCollectionToolParameter,
+    library_data=LibraryDatasetToolParameter,
+    rules=RulesListToolParameter,
+    field=FieldTypeToolParameter,
+    drill_down=DrillDownSelectToolParameter
+)
+#directory=DataToolParameter
+#directory=FileToolParameter
+```
+
+```
+convert_response = self.dataset_populator.run_tool(
+    tool_id="CONVERTER_tar_to_directory",
+    inputs={"input1": {"src": "hda", "id": create_response.json()["outputs"][0]["id"]}},
+    history_id=history_id,
+)
+```
+
+```
+lib/galaxy/datatypes/converters/tar_to_directory.xml
+
+<tool id="CONVERTER_tar_to_directory" name="Convert tar to directory" version="1.0.0" profile="17.05">
+    <command>
+        mkdir '$output1.files_path';
+        cd '$output1.files_path';
+        tar -xzf '$input1'
+    </command>
+    <inputs>
+        <param format="tar" name="input1" type="data"/>
+    </inputs>
+    <outputs>
+        <data format="directory" name="output1"/>
+    </outputs>
+    <help>
+    </help>
+</tool>
+```
+
+### Add missing mappings between Galaxy type and CWL type
+
+BUSCO Tool execution fails because some CWL parameter types (e.g. string,
+enum) are not converted to Galaxy type.
+
+This is because types mapping are correctly set in to_cwl_job(), but not in
+galactic_flavored_to_cwl_job().
+
+To fix the problem, type mapping code has been duplicated from to_cwl_job() to
+galactic_flavored_to_cwl_job().
+
+### Prevent *unset optional file* to trigger *ValidationException*
+
+Exception below occurs when running a Tools with unset optional input dataset 
+
+```
+ValidationException: [Errno 2] No such file or directory: '/home/jra001k/snapshot/galaxy/database/jobs_directory/000/31/None'
+```
+
+To prevent this problem, the code below has been added to exec_before_job()
+method. It removes unset dataset from the input dataset list.
+
+```
+input_json = {k:v for k, v in input_json.iteritems() if not (isinstance(v, dict) and v['class'] == 'File' and v['location'] == 'None')}
+```
+
+### Add *beta_relaxed_fmt_check* to prevent file format check
+
+When running CWL tools, some parameters are defined using EDAM format.
+
+Those formats are not currently supported in Galaxy.
+
+When such tools run in Galaxy, error below occurs:
+
+```
+WorkflowException: Expected value of 'inputRefDBFile' to have format http://edamontology.org/format_1929 but
+  File has no 'format' defined: {
+    "basename": "uniref90_subset.fasta",
+    "nameroot": "uniref90_subset",
+    "nameext": ".fasta",
+    "location": "/home/jra001k/snapshot/galaxy_h_clone/database/files/000/dataset_205.dat",
+    "class": "File",
+    "size": 4753
+}
+```
+
+To prevent this exception to occur, *beta_relaxed_fmt_check* option has been
+added in Cwltool to disable EDAM format checking.
+
+### Prevent call to get_size() when dataset is None
+
+When an user run a CWL Tools and an optional input dataset is not set by the
+user, the exception below occurs:
+
+```
+  File "lib/galaxy/tools/cwl/representation.py", line 163, in dataset_wrapper_to_file_json
+    raw_file_object["size"] = int(dataset_wrapper.get_size())
+
+TypeError: 
+'SafeStringWrapper(str:<class 'galaxy.tools.wrappers.ToolParameterValueWrapper'>, 
+<class 'galaxy.util.object_wrapper.SafeStringWrapper'>, <class 'numbers>, <type 'NoneType'>, 
+<type 'NotImplementedT' object is not callable
+```
+
+This is because the get_size() method is called on an unexisting dataset.
+
+To fix the problem, the get_size() method is not called is the dataset type is
+*NoneDataset*.
+
+```
+def dataset_wrapper_to_file_json(inputs_dir, dataset_wrapper):
+
+    ...
+
+    if not isinstance(dataset_wrapper.unsanitized, NoneDataset):
+        raw_file_object["size"] = int(dataset_wrapper.get_size())
+```
+
+### Rename *Test Dataset*
+
+When running CwlWorkflowsTestCase.test_simplest_wf test, exception below occurs:
+
+```
+WorkflowException: Invalid filename: 'Test Dataset' contains illegal characters
+```
+
+This is caused by space character in the dataset name, in *upload_payload*
+method in test/base/populators.py.
+
+To prevent the exception, the dataset has been renamed replacing space with underscore.
+
+### Enable CWL workflow import with GUI
+
+When importing a CWL workflow using GUI import tool, we get the exception below
+
+```
+raise exceptions.MessageException("The data content does not appear to be a valid workflow.")
+```
+
+This is because Galaxy expects the workflow to bee in JSON format, not YAML format.
+
+A hack has been set up in Galaxy (in *__api_import_from_archive* method) to use
+*from_path* argument as an alternative route, if a JSON exception occurs.
+
+This hack allows to import a CWL workflow inside Galaxy succesfully.
+
+### Replace relative paths with absolute paths
+
+When importing a CWL workflow in Galaxy, the exception below occurs
+
+```
+ValidationException: database/tmp/tmpM55sBv:21:1: checking field `steps`
+database/tmp/tmpM55sBv:52:5:   checking object `database/tmp/tmpM55sBv#remove_overlaps`
+database/tmp/tmpM55sBv:60:5:     Field `run` contains undefined reference to `file:///home/foobar/snapshot/galaxy/database/tools/cmsearch-deoverlap/cmsearch-deoverlap-v0.02.cwl`
+```
+
+It happens because when the workflow is imported, Galaxy have no knowledge of
+the directories tree where the linked Tools are stored. It sees only one CWL file.
+
+As a temporary solution, the directories tree with Tools CWL files is copied on
+the Galaxy server, and the workflow CWL file is modified before the import to
+replace the relative paths with absolute paths (in the *run* attribute).
+
+Example
+
+```
+steps:
+    run: /home/jra001k/snapshot/pasteur/workflow-is-cwl/tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl
+    #run: ../tools/Infernal/cmsearch/infernal-cmsearch-v1.1.2.cwl
+```
+
+### Enable CWL workflow execution with GUI
+
+When executing a CWL workflow in Galaxy, the following exception occurs
+
+```
+  File "lib/galaxy/tools/toolbox/base.py", line 439, in get_tool
+    tool_id = self._tools_by_hash[tool_hash].id
+KeyError: u'e4de79296ec91ab9b8d8d9d71f94044a2561c01b9fc708e5197d432b453fa297'
+```
+
+It seems to be caused by the '_tools_by_hash' attribute not being initialized
+(to be confirmed)
+
+To fix the problem, a call to _init_dynamic_tools() method have been added
+in *UniverseApplication* class constructor.
+
+Also, 'filter' method has been replaced by 'filter_by' method to prevent
+exception below:
+
+```
+  File "lib/galaxy/managers/tools.py", line 117, in list_tools
+    return self.query().filter(active=active)
+TypeError: filter() got an unexpected keyword argument 'active'
+```
 
 ## Modifications detailed description
 

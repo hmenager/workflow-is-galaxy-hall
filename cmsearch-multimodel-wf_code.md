@@ -116,7 +116,6 @@ WorkflowException: ../workflow-is-cwl_h/tools/Infernal/cmsearch/infernal-cmsearc
 
 ```
   - id: search_space_size
-    label: search space size in *Mb* to <x> for E-value calculations
     type: int?
     inputBinding:
       position: 0
