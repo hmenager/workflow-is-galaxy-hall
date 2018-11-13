@@ -310,19 +310,6 @@ Code modification details are brought together in this document
 
 <https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md>
 
-## Problems that remain
-
-* Find an alternative to replacing relative-path with absolute-path in CWL workflow files (CWL-pack ?).
-* During the *Workflow import*, the message "Import failed for unkown reason" is sometime displayed on the client side (without disrupting the import process).
-* Find an alternative to using substring of Tools label as Tools idenfier to be displayed on the Galaxy left panel.
-* Tools default values not set when running a workflow (must be set manually).
-* At Galaxy startup, the fix to populate '_tools_by_hash' variable seems not a good solution as it consumes a lot of memory and CPU. This needs further investigation.
-* Find alternative to adding Directory type support using tar file (as it prevents tar file from being used for another purpose in Galaxy).
-* Workflow import takes a long time (maybe caused by the on-the-fly creation of each dynamic tool ?).
-* Once the run is complete, the browser keep sending requests to Galaxy server without interruption (every second).
-* Tools need to be created in galaxy before importing and running a CWL workflow (this is strange as dynamic tools are created on-the-fly when importing the workflow. This needs further investigation.).
-* When importing a workflow in Galaxy, find alternative to assuming CWL workflow if exception occurs during json deserialization. This is problematic as Galaxy native workflow may also use yaml in the future.
-
 ## Demo server
 
 The Galaxy-CWL demo server contains all the modifications described in this
@@ -339,6 +326,27 @@ the *cmsearch-multimodel-wf* CWL workflow:
 * Url: http://sd-104052.dedibox.fr:8083
 * Authentication login: democwl
 * Galaxy demo user: demo@g-cwl-is.test
+
+### Demo server installation guide
+
+<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_demosrvinst.md>
+
+### Demo procedure
+
+<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_demo.md>
+
+## Problems that remain
+
+* Find an alternative to replacing relative-path with absolute-path in CWL workflow files (CWL-pack ?).
+* During the *Workflow import*, the message "Import failed for unkown reason" is sometime displayed on the client side (without disrupting the import process).
+* Find an alternative to using substring of Tools label as Tools idenfier to be displayed on the Galaxy left panel.
+* Tools default values not set when running a workflow (must be set manually).
+* At Galaxy startup, the fix to populate '_tools_by_hash' variable seems not a good solution as it consumes a lot of memory and CPU. This needs further investigation.
+* Find alternative to adding Directory type support using tar file (as it prevents tar file from being used for another purpose in Galaxy).
+* Workflow import takes a long time (maybe caused by the on-the-fly creation of each dynamic tool ?).
+* Once the run is complete, the browser keep sending requests to Galaxy server without interruption (every second).
+* Tools need to be created in galaxy before importing and running a CWL workflow (this is strange as dynamic tools are created on-the-fly when importing the workflow. This needs further investigation.).
+* When importing a workflow in Galaxy, find alternative to assuming CWL workflow if exception occurs during json deserialization. This is problematic as Galaxy native workflow may also use yaml in the future.
 
 ## Annexes
 
