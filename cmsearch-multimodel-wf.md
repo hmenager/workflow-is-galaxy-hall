@@ -325,9 +325,16 @@ Code modification details are brought together in this document
 
 ## Demo server
 
-The demo server contains all the modifications described in this
-document and can successfully import and run the following workflow:
-https://github.com/hmenager/workflow-is-cwl/blob/master/workflows/cmsearch-multimodel-wf.cwl
+The Galaxy-CWL demo server contains all the modifications described in this
+document and can successfully performs the following tasks on
+the *cmsearch-multimodel-wf* CWL workflow:
+
+* Import wf in Galaxy
+* View wf in Galaxy Workflow Editor
+* Run wf
+* Export wf from Galaxy (json format)
+
+### Demo server informations
 
 * Url: http://sd-104052.dedibox.fr:8083
 * Authentication login: democwl
