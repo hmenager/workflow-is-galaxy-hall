@@ -130,63 +130,6 @@ A temporary hack has been set up:
 Note: this hack has serious limitation as it prevents using file with 'tar'
 extension for another purpose than wrapping a directory.
 
-#### Alternative (not used for now)
-
-```
-parameter_types = dict(
-    text=TextToolParameter,
-    integer=IntegerToolParameter,
-    float=FloatToolParameter,
-    boolean=BooleanToolParameter,
-    genomebuild=GenomeBuildParameter,
-    select=SelectToolParameter,
-    color=ColorToolParameter,
-    data_column=ColumnListParameter,
-    hidden=HiddenToolParameter,
-    hidden_data=HiddenDataToolParameter,
-    baseurl=BaseURLToolParameter,
-    file=FileToolParameter,
-    ftpfile=FTPFileToolParameter,
-    genomespacefile=GenomespaceFileToolParameter,
-    data=DataToolParameter,
-    data_collection=DataCollectionToolParameter,
-    library_data=LibraryDatasetToolParameter,
-    rules=RulesListToolParameter,
-    field=FieldTypeToolParameter,
-    drill_down=DrillDownSelectToolParameter
-)
-#directory=DataToolParameter
-#directory=FileToolParameter
-```
-
-```
-convert_response = self.dataset_populator.run_tool(
-    tool_id="CONVERTER_tar_to_directory",
-    inputs={"input1": {"src": "hda", "id": create_response.json()["outputs"][0]["id"]}},
-    history_id=history_id,
-)
-```
-
-```
-lib/galaxy/datatypes/converters/tar_to_directory.xml
-
-<tool id="CONVERTER_tar_to_directory" name="Convert tar to directory" version="1.0.0" profile="17.05">
-    <command>
-        mkdir '$output1.files_path';
-        cd '$output1.files_path';
-        tar -xzf '$input1'
-    </command>
-    <inputs>
-        <param format="tar" name="input1" type="data"/>
-    </inputs>
-    <outputs>
-        <data format="directory" name="output1"/>
-    </outputs>
-    <help>
-    </help>
-</tool>
-```
-
 [More info](https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md#map-tar-file-to-directory-cwl-type)
 
 ### Add missing mappings between Galaxy type and CWL type
