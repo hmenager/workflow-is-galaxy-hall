@@ -347,6 +347,7 @@ the *cmsearch-multimodel-wf* CWL workflow:
 * Once the run is complete, the browser keep sending requests to Galaxy server without interruption (every second).
 * Tools need to be created in galaxy before importing and running a CWL workflow (this is strange as dynamic tools are created on-the-fly when importing the workflow. This needs further investigation.).
 * When importing a workflow in Galaxy, find alternative to assuming CWL workflow if exception occurs during json deserialization. This is problematic as Galaxy native workflow may also use yaml in the future.
+* Exporting workflow from Galay using CWL / yaml format (i.e. instead of Galaxy / json format). Could be useful if the CWL workflow has been modified with the Galaxy Workflow Editor, or if one wants to convert a Galaxy workflow to CWL format.
 
 ## Annexes
 
