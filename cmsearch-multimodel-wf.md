@@ -367,23 +367,29 @@ https://github.com/hmenager/workflow-is-cwl/blob/master/workflows/cmsearch-multi
 
 ## Annexes
 
-Annex 1
+### Annex 1
 
 Code modification details
 
 <https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md>
 
-Annex 2
+### Annex 2
 
 Demo server installation guide
 
 <https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_demosrvinst.md>
 
-Annex 3
+### Annex 3
 
 Demo procedure
 
 <https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_demo.md>
+
+### Annex 4
+
+*cmsearch-multimodel-wf* Workflow CWL file
+
+https://github.com/hmenager/workflow-is-cwl/blob/master/workflows/cmsearch-multimodel-wf.cwl
 
 <!-- 
 # vim: tw=70
