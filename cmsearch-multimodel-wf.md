@@ -28,7 +28,7 @@ ELIXIR Workflow
 
 <https://github.com/hmenager/workflow-is-cwl>
 
-## Main modifications overview
+## Main modifications
 
 * Add *gx:interface* hints in CWL tools files
 * Prevent filetype checking (EDAM) in Cwltool
