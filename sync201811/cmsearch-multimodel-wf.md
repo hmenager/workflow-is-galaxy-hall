@@ -100,13 +100,6 @@ then the workflow cannot be edited anymore (links and boxes are missing).
 
 It seems to be related by the following change in the database:
 
-after clicking on 'Save' button in the workflow editor, tool are now
-referenced using 'tool_id' column (e.g.
-'tmpPd1pDz#cmsearch-deoverlap-v0.02.cwl') instead of 'tool_hash'
-column (in 'workflow_step' table).
-
-e.g.
-
 Before saving:
 ```
 sqlite> select type,label,tool_id,tool_hash from workflow_step where type='tool' order by label; 
@@ -124,5 +117,13 @@ tool        concatenat  tmpkadxtU#
 tool        remove_ove              e384c3b53464dbea34880afedfb09f6857ab89313014f76f9eea23e15e1c83b8
 tool        remove_ove  tmpkadxtU#  
 ```
+
+i.e. after clicking on 'Save' button in the workflow editor, tool are now
+referenced using 'tool_id' column (e.g.
+'tmpPd1pDz#cmsearch-deoverlap-v0.02.cwl') instead of 'tool_hash'
+column (in 'workflow_step' table).
+
+when hacking the code to force populating 'tool_hash' and setting
+tool_id to None, the problem disappears.
 
 # vim: tw=70
