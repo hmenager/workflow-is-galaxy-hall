@@ -123,9 +123,7 @@ After clicking on 'Save' button in the workflow editor, tools are
 referenced using 'tool_id' column instead of 'tool_hash' column (in
 'workflow_step' table).
 
-When hacking the code to force populating 'tool_hash' column and setting
+When hacking the code 
+([link](https://github.com/jra001k/galaxy/commit/3c167c3f8e945d67190e5faacc8fa1b14ce9e194)) 
+to force populating 'tool_hash' column and setting
 'tool_id' column to NULL, the problem disappears.
-
-```
-https://github.com/jra001k/galaxy/commit/3c167c3f8e945d67190e5faacc8fa1b14ce9e194
-```
