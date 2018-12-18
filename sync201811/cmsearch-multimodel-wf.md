@@ -80,7 +80,7 @@ KeyError: 'id'
 
 It seems caused by 'or' operator interpreting 0 value as false.
 
-Replacing 'or' with 'else/if' block fixes the problem.
+Replacing 'or' with an 'else/if' block fixes the problem.
 
 f68e787f218531dc3d106b81b7d296bf1822d125
 ([gxformat2 fork](https://github.com/jra001k/gxformat2))
@@ -111,12 +111,12 @@ tool        remove_ove              e384c3b53464dbea34880afedfb09f6857ab89313014
 After saving
 ```
 sqlite> select type,label,tool_id,tool_hash from workflow_step where type='tool' order by label; 
-tool        cmsearch                7943013e61897f4949e77546edeabd960a2f608067e2ecd523a1d2ef010e9682
-tool        cmsearch    tmpkadxtU#                                                                  
-tool        concatenat              742a9252f4cf1b80bcb57d20aa4133edbaa46b8a3112a9055110db18b1e446dc
-tool        concatenat  tmpkadxtU#                                                                  
-tool        remove_ove              e384c3b53464dbea34880afedfb09f6857ab89313014f76f9eea23e15e1c83b8
-tool        remove_ove  tmpkadxtU#  
+tool        cmsearch                   7943013e61897f4949e77546edeabd960a2f608067e2ecd523a1d2ef010e9682
+tool        cmsearch    tmpkadxtU#inf                                                                  
+tool        concatenat                 742a9252f4cf1b80bcb57d20aa4133edbaa46b8a3112a9055110db18b1e446dc
+tool        concatenat  tmpkadxtU#con                                                                  
+tool        remove_ove                 e384c3b53464dbea34880afedfb09f6857ab89313014f76f9eea23e15e1c83b8
+tool        remove_ove  tmpkadxtU#cms  
 ```
 
 (after clicking on 'Save' button in the workflow editor, tools are
