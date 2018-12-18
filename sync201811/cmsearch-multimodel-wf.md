@@ -27,7 +27,7 @@ https://github.com/hmenager/workflow-is-cwl
 
 ### TypeError exception when importing a packed workflow.
 
-Workflow is packed with command below:
+[Workflow](https://github.com/hmenager/workflow-is-cwl/blob/master/workflows/cmsearch-multimodel-wf-packed.cwl) is packed with command below:
 
 ```
 $ cwltool --pack cmsearch-multimodel-wf.cwl > cmsearch-multimodel-wf-packed.cwl
