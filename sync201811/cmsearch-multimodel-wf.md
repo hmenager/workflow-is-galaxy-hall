@@ -120,9 +120,8 @@ tool        remove_ove  tmpkadxtU#
 ```
 
 After clicking on 'Save' button in the workflow editor, tool are
-referenced using 'tool_id' column (e.g.
-'tmpPd1pDz#cmsearch-deoverlap-v0.02.cwl') instead of 'tool_hash'
-column (in 'workflow_step' table).
+referenced using 'tool_id' column instead of 'tool_hash' column (in
+'workflow_step' table).
 
 when hacking the code to force populating 'tool_hash' and setting
 tool_id to None, the problem disappears.
