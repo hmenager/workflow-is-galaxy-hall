@@ -55,7 +55,7 @@ Adding 'src' and 'path' attributes in 'data' dict prevents the exception.
 e6a4d11670c9e22dba5e410a2899cfeafccdbadd
 ([galaxy fork](https://github.com/hmenager/galaxy))
 
-### Add support for 0 value in output_id
+### KeyError exception when saving a packed workflow
 
 When importing a packed workflow, some output_id use 0 value, which
 causes the exception below (when we click on "Save" in workflow editor
