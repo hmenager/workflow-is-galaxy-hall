@@ -9,7 +9,7 @@ HEAD commit when this document has been written: 9899eb1cfa6832f5058294e39a5d203
 
 ## Fork used
 
-Fix proposals are committed on repositories below:
+Fix proposals are committed in repositories below:
 
 ```
 https://github.com/hmenager/galaxy
@@ -19,9 +19,13 @@ https://github.com/hmenager/galaxy
 https://github.com/jra001k/gxformat2
 ```
 
+```
+https://github.com/hmenager/workflow-is-cwl
+```
+
 ## Modifications description
 
-### Fix TypeError exception when importing a packed workflow.
+### TypeError exception when importing a packed workflow.
 
 Workflow is packed with command below:
 
