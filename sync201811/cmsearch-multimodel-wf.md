@@ -78,7 +78,7 @@ Traceback (most recent call last):
 KeyError: 'id'
 ```
 
-This is because 'or' operator interprets 0 value as false.
+It seems caused by 'or' operator interpreting 0 value as false.
 
 Replacing 'or' with else/if block fixes the problem.
 
