@@ -119,11 +119,11 @@ tool        remove_ove              e384c3b53464dbea34880afedfb09f6857ab89313014
 tool        remove_ove  tmpkadxtU#  
 ```
 
-After clicking on 'Save' button in the workflow editor, tools are
+(after clicking on 'Save' button in the workflow editor, tools are
 referenced using 'tool_id' column instead of 'tool_hash' column (in
-'workflow_step' table).
+'workflow_step' table)).
 
 When hacking the code 
-([link](https://github.com/jra001k/galaxy/commit/3c167c3f8e945d67190e5faacc8fa1b14ce9e194)) 
+([hack link](https://github.com/jra001k/galaxy/commit/3c167c3f8e945d67190e5faacc8fa1b14ce9e194)) 
 to force populating 'tool_hash' column and setting
 'tool_id' column to NULL, the problem disappears.
