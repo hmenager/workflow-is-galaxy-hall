@@ -53,7 +53,7 @@ TypeError: unsupported operand type(s) for +=: 'NoneType' and 'str'
 Adding 'src' and 'path' attributes in 'data' dict prevents the exception.
 
 e6a4d11670c9e22dba5e410a2899cfeafccdbadd
-(Galaxy fork)
+([Galaxy fork](https://github.com/hmenager/galaxy))
 
 ### Add support for 0 value in output_id
 
@@ -80,7 +80,7 @@ KeyError: 'id'
 
 It seems caused by 'or' operator interpreting 0 value as false.
 
-Replacing 'or' with else/if block fixes the problem.
+Replacing 'or' with 'else/if' block fixes the problem.
 
 f68e787f218531dc3d106b81b7d296bf1822d125
 (gxformat2 fork)
