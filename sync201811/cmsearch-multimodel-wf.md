@@ -119,11 +119,11 @@ tool        remove_ove              e384c3b53464dbea34880afedfb09f6857ab89313014
 tool        remove_ove  tmpkadxtU#  
 ```
 
-After clicking on 'Save' button in the workflow editor, tool are
+After clicking on 'Save' button in the workflow editor, tools are
 referenced using 'tool_id' column instead of 'tool_hash' column (in
 'workflow_step' table).
 
-when hacking the code to force populating 'tool_hash' and setting
-tool_id to None, the problem disappears.
+when hacking the code to force populating 'tool_hash' column and setting
+tool_id column to NULL, the problem disappears.
 
 # vim: tw=70
