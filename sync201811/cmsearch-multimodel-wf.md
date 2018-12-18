@@ -7,7 +7,7 @@ https://github.com/common-workflow-language/galaxy
 
 When this document has been written, HEAD commit  was 9899eb1cfa6832f5058294e39a5d20380bb526c8
 
-## Fork used
+## Fork
 
 Fix proposals are committed in repositories below:
 
