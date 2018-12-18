@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes workflow test using last version of
+This document describes CWL workflow test with Galaxy using last version of
 https://github.com/common-workflow-language/galaxy
 
 HEAD commit when this document has been written: 9899eb1cfa6832f5058294e39a5d20380bb526c8
