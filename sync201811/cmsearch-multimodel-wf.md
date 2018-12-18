@@ -124,6 +124,6 @@ referenced using 'tool_id' column instead of 'tool_hash' column (in
 'workflow_step' table)).
 
 When hacking the code 
-([hack link](https://github.com/jra001k/galaxy/commit/3c167c3f8e945d67190e5faacc8fa1b14ce9e194)) 
+([link](https://github.com/jra001k/galaxy/commit/3c167c3f8e945d67190e5faacc8fa1b14ce9e194)) 
 to force populating 'tool_hash' column and setting
 'tool_id' column to NULL, the problem disappears.
