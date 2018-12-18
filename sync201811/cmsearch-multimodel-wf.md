@@ -118,7 +118,7 @@ tool        remove_ove              e384c3b53464dbea34880afedfb09f6857ab89313014
 tool        remove_ove  tmpkadxtU#  
 ```
 
-i.e. after clicking on 'Save' button in the workflow editor, tool are now
+After clicking on 'Save' button in the workflow editor, tool are
 referenced using 'tool_id' column (e.g.
 'tmpPd1pDz#cmsearch-deoverlap-v0.02.cwl') instead of 'tool_hash'
 column (in 'workflow_step' table).
