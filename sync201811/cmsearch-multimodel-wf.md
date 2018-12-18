@@ -5,7 +5,7 @@
 This document describes workflow test using last version of
 https://github.com/common-workflow-language/galaxy
 
-Last commit synced: 9899eb1cfa6832f5058294e39a5d20380bb526c8
+HEAD commit when this document has been written: 9899eb1cfa6832f5058294e39a5d20380bb526c8
 
 ## Fork used
 
