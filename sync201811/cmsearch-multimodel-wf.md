@@ -83,17 +83,17 @@ It seems caused by 'or' operator interpreting 0 value as false.
 Replacing 'or' with 'else/if' block fixes the problem.
 
 f68e787f218531dc3d106b81b7d296bf1822d125
-(gxformat2 fork)
+([gxformat2 fork](https://github.com/jra001k/gxformat2))
 
-### 
+### The tool 'tmpugCygk#infernal-cmsearch-v1.1.2.cwl' is missing. Cannot build workflow module.
 
 When we restart Galaxy (after having edited and saved the workflow),
 and we try to edit the wf again,  warning below occurs
 
 ```
-galaxy.workflow.modules WARNING 2018-12-11 06:15:52,195 [p:16652,w:1,m:0] [uWSGIWorker1Core0] The tool 'tmpugCygk#infernal-cmsearch-v1.1.2.cwl' is missing. Cannot build workflow module.                                       
-galaxy.workflow.modules WARNING 2018-12-11 06:15:52,210 [p:16652,w:1,m:0] [uWSGIWorker1Core0] The tool 'tmpugCygk#concatenate.cwl' is missing. Cannot build workflow module.                                                    
-galaxy.workflow.modules WARNING 2018-12-11 06:15:52,214 [p:16652,w:1,m:0] [uWSGIWorker1Core0] The tool 'tmpugCygk#cmsearch-deoverlap-v0.02.cwl' is missing. Cannot build workflow module.                                       
+galaxy.workflow.modules WARNING The tool 'tmpugCygk#infernal-cmsearch-v1.1.2.cwl' is missing. Cannot build workflow module.
+galaxy.workflow.modules WARNING The tool 'tmpugCygk#concatenate.cwl' is missing. Cannot build workflow module.
+galaxy.workflow.modules WARNING The tool 'tmpugCygk#cmsearch-deoverlap-v0.02.cwl' is missing. Cannot build workflow module.
 ```
 
 then the workflow cannot be edited anymore (links and boxes are missing).
