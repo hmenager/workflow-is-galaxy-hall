@@ -125,5 +125,3 @@ referenced using 'tool_id' column instead of 'tool_hash' column (in
 
 when hacking the code to force populating 'tool_hash' column and setting
 tool_id column to NULL, the problem disappears.
-
-# vim: tw=70
