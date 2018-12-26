@@ -85,6 +85,45 @@ Replacing 'or' with an 'else/if' block fixes the problem.
 f68e787f218531dc3d106b81b7d296bf1822d125
 ([gxformat2 fork](https://github.com/jra001k/gxformat2))
 
+### Map tar file to 'Directory' type
+
+When running the BUSCO tool, error below occurs
+
+```
+Traceback (most recent call last):
+  File "lib/galaxy/jobs/runners/__init__.py", line 214, in prepare_job
+    job_wrapper.prepare()
+  File "lib/galaxy/jobs/__init__.py", line 871, in prepare
+    tool_evaluator.set_compute_environment(compute_environment, get_special=get_special)
+  File "lib/galaxy/tools/evaluation.py", line 123, in set_compute_environment
+    self.tool.exec_before_job(self.app, inp_data, out_data, param_dict)
+  File "lib/galaxy/tools/__init__.py", line 2457, in exec_before_job
+    cwl_command_line = cwl_job_proxy.command_line
+  File "lib/galaxy/tools/cwl/parser.py", line 516, in command_line
+    if self.is_command_line_job:
+  File "lib/galaxy/tools/cwl/parser.py", line 428, in is_command_line_job
+    self._ensure_cwl_job_initialized()
+  File "lib/galaxy/tools/cwl/parser.py", line 452, in _ensure_cwl_job_initialized
+    *args, **kwargs
+  File "/home/jra001k/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/command_line_tool.py", line 342, in job
+    builder = self._init_job(job_order, **kwargs)
+  File "/home/jra001k/snapshot/galaxy/.venv/local/lib/python2.7/site-packages/cwltool/process.py", line 594, in _init_job
+    raise WorkflowException("Invalid job input record:\n" + Text(e))
+WorkflowException: Invalid job input record:
+the `lineage` field is not valid because
+  Expected class 'Directory' but this is 'File'
+```
+
+The two commits below fix this error.
+
+a4b82fa75a5fdb79aba13410cc9a611f593b07b4
+3399e035cdc98be41feb5249e6d9ee64fd40e4a3
+([galaxy fork](https://github.com/hmenager/galaxy))
+
+Note: this patch is a rewriting of a
+([previous try](https://github.com/common-workflow-language/galaxy/commit/6e675f33b93c08d939fd520ecfafb6ee8a9726df))
+which should prevent regression in "Directory output test".
+
 ### The tool 'tmpugCygk#infernal-cmsearch-v1.1.2.cwl' is missing. Cannot build workflow module.
 
 When we restart Galaxy (after having edited and saved the workflow),
