@@ -117,7 +117,9 @@ the `lineage` field is not valid because
 The two commits below fix this error.
 
 a4b82fa75a5fdb79aba13410cc9a611f593b07b4
+
 3399e035cdc98be41feb5249e6d9ee64fd40e4a3
+
 ([galaxy fork](https://github.com/hmenager/galaxy))
 
 Note: this patch is a rewriting of a
