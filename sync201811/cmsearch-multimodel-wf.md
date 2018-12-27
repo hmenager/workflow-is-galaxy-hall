@@ -123,7 +123,7 @@ a4b82fa75a5fdb79aba13410cc9a611f593b07b4
 ([galaxy fork](https://github.com/hmenager/galaxy))
 
 Note: this patch is a rewriting of a
-[previous try](https://github.com/common-workflow-language/galaxy/commit/6e675f33b93c08d939fd520ecfafb6ee8a9726df)
+[previous try](https://github.com/common-workflow-language/galaxy/commit/6e675f33b93c08d939fd520ecfafb6ee8a9726df),
 which should prevent regression in "Directory output test".
 
 ### The tool 'tmpugCygk#infernal-cmsearch-v1.1.2.cwl' is missing. Cannot build workflow module.
