@@ -7,21 +7,6 @@ This document contains various links related to Galaxy-CWL implementation and te
 <https://github.com/elixir-europe/BioHackathon/blob/master/tools/CWL%20support%20in%20Galaxy/README.md>
 
 <https://docs.google.com/presentation/d/1zXpOhJDeVYs-J-1jt0rz7gox10o78cFqshiM-wy8Xh0/edit#slide=id.p1>
-
-## Development environment setup
-
-<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/dev_env_setup.md>
-
-## Issues
-
-Galaxy-CWL implementation issues
-
-<https://github.com/common-workflow-language/galaxy/issues>
-
-Galaxy-CWL tools and workflow issues
-
-<https://github.com/hmenager/workflow-is-cwl/issues>
-
 ## *cmsearch-multimodel-wf* workflow test
 
 Overview
@@ -41,6 +26,21 @@ Demo
 *cmsearch-multimodel-wf* Workflow CWL file
 
 https://github.com/hmenager/workflow-is-cwl/blob/master/workflows/cmsearch-multimodel-wf.cwl
+
+## Development environment setup
+
+<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/dev_env_setup.md>
+
+## Issues
+
+Galaxy-CWL implementation issues
+
+<https://github.com/common-workflow-language/galaxy/issues>
+
+Galaxy-CWL tools and workflow issues
+
+<https://github.com/hmenager/workflow-is-cwl/issues>
+
 
 ## Repositories fork
 
