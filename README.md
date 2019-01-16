@@ -11,17 +11,17 @@ This document contains various links related to Galaxy-CWL implementation and te
 
 Overview
 
-<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf.md>
+<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/sync201807/cmsearch-multimodel-wf.md>
 
 Code modification details
 
-<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_code.md>
+<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/sync201807/cmsearch-multimodel-wf_code.md>
 
 Demo
 
-<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_demosrvinst.md>
+<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/sync201807/cmsearch-multimodel-wf_demosrvinst.md>
 
-<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/cmsearch-multimodel-wf_demo.md>
+<https://github.com/hmenager/workflow-is-galaxy-hall/blob/master/sync201807/cmsearch-multimodel-wf_demo.md>
 
 *cmsearch-multimodel-wf* Workflow CWL file
 
