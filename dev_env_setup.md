@@ -1,6 +1,9 @@
 # Development environment setup
 
-The repository where the Galaxy-CWL work is done is a [fork of the official one](https://github.com/common-workflow-language/galaxy). We (@hmenager, @khhillion, @jra001k) are working on a [sub-fork of it](https://github.com/common-workflow-language/galaxy).
+The repository where the Galaxy-CWL work is done is a [fork of the official
+one](https://github.com/common-workflow-language/galaxy). We (@hmenager,
+@khhillion, @jra001k) are working on a [sub-fork of
+it](https://github.com/common-workflow-language/galaxy).
 
 Here's a typical way to set up your environment for development purposes:
 
@@ -27,7 +30,9 @@ Updating the _origin_ repository should be straightforward.
 git pull origin
 ```
 
-John performs rebases on common-workflow-language/galaxy on a regular basis. When such rebases are performed, the way to update origin is to perform a rebase locally and then send force push it locally
+John performs rebases on common-workflow-language/galaxy on a regular basis.
+When such rebases are performed, the way to update origin is to perform a
+rebase locally and then send force push it locally
 
 ```shell
 git rebase -i upstream/cwl-1.0
@@ -37,7 +42,13 @@ git push --force
 
 ## Where are the tests?
 
-The list of CWL conformance tests in Galaxy is located in `test/unit/tools/cwl_tools/v1.0`. This directory contains the list itself, in the `conformance_tests.yaml` file, and the various CWL tools, workflows, and data in there. These files are copied from the [CWL repo](https://github.com/common-workflow-language/common-workflow-language), where they are located in `v1.0/conformance_test_v1.0.yaml` for the list itself and `v1.0/v1.0/` for the dependencies.
+The list of CWL conformance tests in Galaxy is located in
+`test/unit/tools/cwl_tools/v1.0`. This directory contains the list itself, in
+the `conformance_tests.yaml` file, and the various CWL tools, workflows, and
+data in there. These files are copied from the [CWL
+repo](https://github.com/common-workflow-language/common-workflow-language),
+where they are located in `v1.0/conformance_test_v1.0.yaml` for the list itself
+and `v1.0/v1.0/` for the dependencies.
 
 ## Running the tests
 
@@ -56,7 +67,15 @@ export GALAXY_TEST_DB_TEMPLATE=db_gx_rev_0141.sqlite
 ```
 
 ## Creating the tests used by nose
-The conformance tests are "mirrored" in the Galaxy repository: the `conformance_tests.yaml` file and its dependencies is in the `test/unit/tools/cwl_tools/v1.0` directory. The script to create the unit tests modules for CWL is `test/unit/tools/cwl_tools/conformance_to_test_cases.py`. When it is run, it parses the conformance_tests file and creates two modules, one for all the CWL conformance tests and one for the ones which are passing, `test/api/test_cwl_conformance_v1_0.py` and `test/api/test_cwl_conformance_green_v1_0.py`
+The conformance tests are "mirrored" in the Galaxy repository: the
+`conformance_tests.yaml` file and its dependencies is in the
+`test/unit/tools/cwl_tools/v1.0` directory. The script to create the unit tests
+modules for CWL is `test/unit/tools/cwl_tools/conformance_to_test_cases.py`.
+When it is run, it parses the conformance_tests file and creates two modules,
+one for all the CWL conformance tests and one for the ones which are passing,
+`test/api/test_cwl_conformance_v1_0.py` and
+`test/api/test_cwl_conformance_green_v1_0.py`
+
 The generation script can be run with:
 
 ```shell
@@ -66,7 +85,9 @@ python test/unit/tools/cwl_tools/conformance_to_test_cases.py
 ## Install CWL tools in Galaxy
 
 ### turn on `enable_beta_tool_formats`
-The config file is config/galaxy.yml. If not already done, just copy it from config/galaxy.yml.sample (which is used by default but _do not modify the sample file, copy and modify_.
+The config file is config/galaxy.yml. If not already done, just copy it from
+config/galaxy.yml.sample (which is used by default but _do not modify the
+sample file, copy and modify_.
 
 The part that should appear in there is:
 
@@ -96,5 +117,12 @@ modify the list of tools in `config/tool_conf.xml` to add the CWL tools you want
 
 ## Miscelaneous Client development notes
 
-the "Galaxy inception bug" came from the fact that the form was not detected as "regular", something John corrected in https://github.com/common-workflow-language/galaxy/commit/9291974b7a2c55e37e268cdf9f3b199b87d5a0ca. The code there (`client/galaxy/scripts/mvc/tool/tools.js`) tests for a list of tool types that are accepted as "regular" forms.
-When modifying the client code, make sure you rebuild the client with `make client` and reload the portal. To watch the client code (js/css) and rebuild as soon as there is a modification, just use `make client-watch`.
+the "Galaxy inception bug" came from the fact that the form was not detected as
+"regular", something John corrected in
+https://github.com/common-workflow-language/galaxy/commit/9291974b7a2c55e37e268cdf9f3b199b87d5a0ca.
+The code there (`client/galaxy/scripts/mvc/tool/tools.js`) tests for a list of
+tool types that are accepted as "regular" forms.
+
+When modifying the client code, make sure you rebuild the client with `make
+client` and reload the portal. To watch the client code (js/css) and rebuild as
+soon as there is a modification, just use `make client-watch`.
