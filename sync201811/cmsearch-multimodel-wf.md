@@ -16,7 +16,7 @@ https://github.com/hmenager/galaxy
 ```
 
 ```
-https://github.com/jra001k/gxformat2
+https://github.com/hmenager/gxformat2
 ```
 
 ```
@@ -83,7 +83,7 @@ It seems caused by 'or' operator interpreting 0 value as false.
 Replacing 'or' with an 'else/if' block fixes the problem.
 
 f68e787f218531dc3d106b81b7d296bf1822d125
-([gxformat2 fork](https://github.com/jra001k/gxformat2))
+([gxformat2 fork](https://github.com/hmenager/gxformat2))
 
 ### Map tar file to 'Directory' type
 
@@ -165,6 +165,6 @@ referenced using 'tool_id' column instead of 'tool_hash' column (in
 'workflow_step' table)).
 
 When hacking the code 
-([link](https://github.com/jra001k/galaxy/commit/3c167c3f8e945d67190e5faacc8fa1b14ce9e194)) 
+([link](https://github.com/hmenager/galaxy/commit/3c167c3f8e945d67190e5faacc8fa1b14ce9e194)) 
 to force populating 'tool_hash' column and setting
 'tool_id' column to NULL, the problem seems to disappear.
