@@ -41,7 +41,7 @@
               </destinations>
           </job_conf>
 
-    * config/job_conf.xml
+    * config/galaxy.yml
 
         * allow_path_paste: true
         * enable_beta_tool_formats: true
